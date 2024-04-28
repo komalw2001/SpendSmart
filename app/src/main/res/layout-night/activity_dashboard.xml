@@ -46,6 +46,7 @@
         android:layout_margin="15dp"
         android:backgroundTint="@color/main_color_night"
         app:tint="@color/black"
+        android:id="@+id/fabAdd"
         android:contentDescription="Add Expense or Income"
         ></com.google.android.material.floatingactionbutton.FloatingActionButton>
 

@@ -14,9 +14,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -26,6 +28,10 @@ public class DashboardActivity extends AppCompatActivity {
 
     TabLayout tabLayout;
     ViewPager2 viewPager;
+
+    Fragment fragOverview, fragReminders,fragBudgets,fragReports,fragGoals;
+
+    FloatingActionButton fabAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +47,25 @@ public class DashboardActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        fabAdd = findViewById(R.id.fabAdd);
+
+        fragBudgets = new BudgetsFragment(this);
+        fragGoals = new GoalsFragment(this);
+        fragReminders = new RemindersFragment(this);
+        fragReports = new ReportsFragment(this);
+        fragOverview = new OverviewFragment(this);
+
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewpager);
 
-        viewPager.setAdapter(new TabAdapter(this));
+        TabAdapter tabAdapter = new TabAdapter(this);
+        tabAdapter.addFragment(fragOverview);
+        tabAdapter.addFragment(fragBudgets);
+        tabAdapter.addFragment(fragGoals);
+        tabAdapter.addFragment(fragReminders);
+        tabAdapter.addFragment(fragReports);
+
+        viewPager.setAdapter(tabAdapter);
 
         TabLayoutMediator mediator = new TabLayoutMediator(
                 tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
