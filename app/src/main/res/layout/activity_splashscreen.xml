@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".splashscreen"
+    android:background="@color/emeraldgreen"
+    android:orientation="vertical">
+    <Space
+        android:layout_width="300dp"
+        android:layout_height="180dp"
+        >
+
+    </Space>
+    <ImageView
+        android:layout_width="160sp"
+        android:layout_height="280sp"
+        android:src="@drawable/logo2"
+        android:layout_gravity="center_horizontal"
+        >
+
+    </ImageView>
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="20dp">
+
+    </Space>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/queensidesmedium"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="SpendSmart"
+
+        android:textSize="48sp">
+
+    </TextView>
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="20dp">
+
+    </Space>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Track your expenses like never before."
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/queensidesmedium"
+        android:textColor="#CCC4C4"
+        android:padding="15dp"
+        android:gravity="center_horizontal"
+        >
+
+    </TextView>
+
+</LinearLayout>

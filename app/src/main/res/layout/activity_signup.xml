@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Login"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:paddingTop="100dp"
+
+        >
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="100sp">
+
+        </Space>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Signup"
+            android:paddingTop="100px"
+            android:fontFamily="@font/queensidesmedium"
+            android:textColor="@color/emeraldgreen"
+            android:textStyle="bold"
+            android:textSize="30sp"
+
+            >
+
+        </TextView>
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="40dp">
+
+        </Space>
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+
+            >
+
+            <ImageView
+                android:layout_width="29sp"
+                android:layout_height="30sp"
+                android:paddingRight="9dp"
+                android:src="@drawable/mail"
+                android:layout_gravity="center">
+
+            </ImageView>
+
+            <EditText
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                >
+
+            </EditText>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <ImageView
+                android:layout_width="36sp"
+                android:layout_height="23sp"
+                android:paddingRight="10dp"
+                android:src="@drawable/lock"
+                android:layout_gravity="center">
+
+            </ImageView>
+
+            <EditText
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                >
+
+            </EditText>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <ImageView
+                android:layout_width="36sp"
+                android:layout_height="23sp"
+                android:paddingRight="10dp"
+                android:src="@drawable/lock"
+                android:layout_gravity="center">
+
+            </ImageView>
+
+            <EditText
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:hint=" Confirm Password"
+                >
+
+            </EditText>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="5dp"
+        >
+
+    </Space>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        >
+
+    </Space>
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Create my account"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/emeraldgreen"
+        >
+
+    </Button>
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        >
+
+    </Space>
+
+
+
+
+</LinearLayout>
