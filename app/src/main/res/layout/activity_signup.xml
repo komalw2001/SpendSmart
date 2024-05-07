@@ -33,7 +33,6 @@
             android:textColor="@color/emeraldgreen"
             android:textStyle="bold"
             android:textSize="30sp"
-
             >
 
         </TextView>
@@ -62,7 +61,8 @@
             <EditText
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:hint="Email"
+                android:hint="@string/email_username"
+                android:id="@+id/etEmail"
                 >
 
             </EditText>
@@ -87,7 +87,8 @@
             <EditText
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:hint="Password"
+                android:hint="@string/password"
+                android:id="@+id/etPassword"
                 >
 
             </EditText>
@@ -110,7 +111,8 @@
             <EditText
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:hint=" Confirm Password"
+                android:hint="@string/confirm_password"
+                android:id="@+id/etConfirmPassword"
                 >
 
             </EditText>
@@ -137,6 +139,7 @@
         android:text="Create my account"
         android:layout_gravity="center"
         android:backgroundTint="@color/emeraldgreen"
+        android:id="@+id/btnSignup"
         >
 
     </Button>
