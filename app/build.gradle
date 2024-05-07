@@ -3,9 +3,11 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
+
 android {
     namespace 'com.example.spendsmart'
     compileSdk 34
+
 
     defaultConfig {
         applicationId "com.example.spendsmart"
@@ -14,8 +16,10 @@ android {
         versionCode 1
         versionName "1.0"
 
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
 
     buildTypes {
         release {
@@ -29,7 +33,9 @@ android {
     }
 }
 
+
 dependencies {
+
 
     implementation libs.appcompat
     implementation libs.material
