@@ -7,8 +7,7 @@
     android:id="@+id/main"
     tools:context=".splashscreen"
     android:background="@color/emeraldgreen"
-    android:orientation="vertical"
-    android:id="@+id/main">
+    android:orientation="vertical">
     <Space
         android:layout_width="300dp"
         android:layout_height="180dp"

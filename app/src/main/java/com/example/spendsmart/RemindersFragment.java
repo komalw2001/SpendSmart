@@ -9,11 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RemindersFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class RemindersFragment extends Fragment {
 
     Context context;
