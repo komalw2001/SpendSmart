@@ -13,8 +13,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
@@ -46,37 +49,75 @@ public class Signup extends AppCompatActivity {
                 String password = etPassword.getText().toString().trim();
                 String confirmpassword = etConfirmPassword.getText().toString().trim();
 
-                // checks lagane hain !!!!!!!!!! - password match,empty fields,username alr exists
+                if (!password.equals(confirmpassword)) {
+                    Toast.makeText(Signup.this, "Password fields don't match!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (email.isEmpty() || password.isEmpty() || confirmpassword.isEmpty()) {
+                    Toast.makeText(Signup.this, "Please fill all fields!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (email.contains(".") || email.contains("#") || email.contains("$") || email.contains("[") || email.contains("]"))
+                {
+                    Toast.makeText(Signup.this, "Invalid username format!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (password.length() < 5)
+                {
+                    Toast.makeText(Signup.this, "Password length needs to be at least 4 characters!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
 
                 HashMap<Object, Object> data = new HashMap<>();
                 data.put("email", email);
                 data.put("password", password);
 
+                reference.child("Users").child(email).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
 
-                reference.child("Users")
-                        .child(email) // Using the email as the key
-                        .setValue(data)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                Toast.makeText(Signup.this, "Successfully created account!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Signup.this, "Username already exists. Choose another email.", Toast.LENGTH_SHORT).show();
+                            } else {
 
-                                SharedPreferences sPref = getSharedPreferences("user_info", MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sPref.edit();
-                                editor.putString("session_user", email);
+                                HashMap<Object, Object> data = new HashMap<>();
+                                data.put("email", email);
+                                data.put("password", password);
 
-                                editor.apply();
+                                reference.child("Users")
+                                        .child(email)
+                                        .setValue(data)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                Toast.makeText(Signup.this, "Successfully created account!", Toast.LENGTH_SHORT).show();
 
-                                Intent intent = new Intent(Signup.this, DashboardActivity.class);
-                                startActivity(intent);
+                                                SharedPreferences sPref = getSharedPreferences("user_info", MODE_PRIVATE);
+                                                SharedPreferences.Editor editor = sPref.edit();
+                                                editor.putString("session_user", email);
+
+                                                editor.putBoolean("logged_in",true);
+                                                editor.apply();
+                                                Intent intent = new Intent(Signup.this, DashboardActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(Signup.this, "Something went wrong.. Please try again."+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
                             }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(Signup.this, "Something went wrong.. Please try again."+e.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Toast.makeText(Signup.this, "Database error occurred!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
             }
         });

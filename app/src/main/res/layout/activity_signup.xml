@@ -89,6 +89,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
                 android:id="@+id/etPassword"
+                android:inputType="textPassword"
                 >
 
             </EditText>
@@ -113,6 +114,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/confirm_password"
                 android:id="@+id/etConfirmPassword"
+                android:inputType="textPassword"
                 >
 
             </EditText>
