@@ -1,6 +1,7 @@
 package com.example.spendsmart;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -32,8 +33,17 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(MainActivity.this, Login.class));
-                finish();
+                SharedPreferences sPref = getSharedPreferences("user_info", MODE_PRIVATE);
+                if (sPref.getBoolean("logged_in",false) == true)
+                {
+                    startActivity(new Intent(MainActivity.this, DashboardActivity.class));
+                    finish();
+                }
+                else{
+                    startActivity(new Intent(MainActivity.this, Login.class));
+                    finish();
+                }
+
             }
         }, 1000); // Delay in milliseconds, adjust as needed
     }
