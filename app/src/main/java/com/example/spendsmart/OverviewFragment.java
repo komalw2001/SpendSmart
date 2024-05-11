@@ -9,17 +9,23 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Trace;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 
@@ -29,7 +35,11 @@ public class OverviewFragment extends Fragment
 
     TextView tvBalance;
 
+    RecyclerView rvIncomes,rvExpenses;
+
     DatabaseReference dbRef;
+    
+    ExpenseAdapter expenseAdapter;
 
     public OverviewFragment(Context c) {
         context = c;
@@ -90,10 +100,37 @@ public class OverviewFragment extends Fragment
                         Log.d("Showing Cash","Error: "+error.getMessage());
                     }
                 });
+
+        Query expenseQuery = dbRef.child("Expenses").orderByChild("date").equalTo(user,"user");
+
+        rvExpenses = view.findViewById(R.id.rvExpenses);
+
+        rvExpenses.setLayoutManager(new LinearLayoutManager(context));
+        rvExpenses.setHasFixedSize(true);
+
+        FirebaseRecyclerOptions<Expense> options =
+                new FirebaseRecyclerOptions.Builder<Expense>()
+                        .setQuery(expenseQuery, Expense.class)
+                        .build();
+
+        expenseAdapter = new ExpenseAdapter(context, options);
+        rvExpenses.setAdapter(expenseAdapter);
     }
 
     private boolean isNightModeActive() {
         int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         return nightModeFlags == Configuration.UI_MODE_NIGHT_YES;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        expenseAdapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        expenseAdapter.stopListening();
     }
 }

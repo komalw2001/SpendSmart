@@ -1,24 +1,20 @@
 package com.example.spendsmart;
 
-import com.google.firebase.database.IgnoreExtraProperties;
 
-@IgnoreExtraProperties
-public class Transaction {
+public class Expense {
     private String amount;
     private int category;
     private String date;
-    private String type; // "Income" or "Expense"
     private String user;
 
-    public Transaction() {
+    public Expense() {
         // Default constructor required for Firebase
     }
 
-    public Transaction(String amount, int category, String date, String type, String user) {
+    public Expense(String amount, int category, String date, String user) {
         this.amount = amount;
         this.category = category;
         this.date = date;
-        this.type = type;
         this.user = user;
     }
 
@@ -44,14 +40,6 @@ public class Transaction {
 
     public void setDate(String date) {
         this.date = date;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getUser() {
