@@ -1,12 +1,16 @@
 plugins {
-    id 'com.android.application'
+    alias(libs.plugins.androidApplication)
     id 'com.google.gms.google-services'
 }
+
+
 
 
 android {
     namespace 'com.example.spendsmart'
     compileSdk 34
+
+
 
 
     defaultConfig {
@@ -17,8 +21,12 @@ android {
         versionName "1.0"
 
 
+
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+
 
 
     buildTypes {
@@ -34,7 +42,11 @@ android {
 }
 
 
+
+
 dependencies {
+
+
 
 
     implementation libs.appcompat
@@ -46,6 +58,4 @@ dependencies {
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
     implementation libs.firebase.ui.database
-
 }
-

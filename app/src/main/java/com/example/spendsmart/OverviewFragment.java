@@ -2,10 +2,12 @@ package com.example.spendsmart;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -64,7 +66,22 @@ public class OverviewFragment extends Fragment
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.exists()) {
                             Double balance = snapshot.getValue(Double.class);
-                            tvBalance.setText(balance.toString());
+
+                            if (balance <= 0) {
+                                if (isNightModeActive()) {
+                                    tvBalance.setTextColor(ContextCompat.getColor(context, R.color.negative_balance_night));
+                                } else {
+                                    tvBalance.setTextColor(ContextCompat.getColor(context, R.color.negative_balance));
+                                }
+                            } else {
+                                if (isNightModeActive()) {
+                                    tvBalance.setTextColor(ContextCompat.getColor(context, R.color.main_color_night));
+                                } else {
+                                    tvBalance.setTextColor(ContextCompat.getColor(context, R.color.main_color));
+                                }
+                            }
+
+                            tvBalance.setText(String.format("%.0f", balance));
                         }
                     }
 
@@ -73,5 +90,10 @@ public class OverviewFragment extends Fragment
                         Log.d("Showing Cash","Error: "+error.getMessage());
                     }
                 });
+    }
+
+    private boolean isNightModeActive() {
+        int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        return nightModeFlags == Configuration.UI_MODE_NIGHT_YES;
     }
 }

@@ -10,5 +10,6 @@
     <string name="expenses">Expenses</string>
     <string name="income">Income</string>
     <string name="category">Category</string>
-    <string name="transactions">Transactions</string>
+    <string name="transactions">Transaction History</string>
+    <string name="enter_amount">Enter Amount</string>
 </resources>

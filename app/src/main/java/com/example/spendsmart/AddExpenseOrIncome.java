@@ -196,27 +196,31 @@ public class AddExpenseOrIncome extends AppCompatActivity {
                                             balance -= Double.parseDouble(amt);
 
                                             // REMINDER IF EXPENSE > BALANCE
-                                            Calendar calendar = Calendar.getInstance();
-                                            Date currentDate = calendar.getTime();
-                                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                                            String formattedDate = dateFormat.format(currentDate);
 
-                                            HashMap<Object, Object> data = new HashMap<>();
-                                            data.put("type", 1);
-                                            data.put("user", user);
-                                            data.put("title", "Balance Exceeded!");
-                                            data.put("text", "You have exceeded your current balance!");
-                                            data.put("date",formattedDate);
+                                            if (balance < 0) {
 
-                                            dbRef.child("Reminders")
-                                                    .push()
-                                                    .setValue(data)
-                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                        @Override
-                                                        public void onSuccess(Void unused) {
-                                                            Toast.makeText(AddExpenseOrIncome.this, "Balance exceeded!", Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    });
+                                                Calendar calendar = Calendar.getInstance();
+                                                Date currentDate = calendar.getTime();
+                                                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                                                String formattedDate = dateFormat.format(currentDate);
+
+                                                HashMap<Object, Object> data = new HashMap<>();
+                                                data.put("type", 1);
+                                                data.put("user", user);
+                                                data.put("title", "Balance Exceeded!");
+                                                data.put("text", "You have exceeded your current balance!");
+                                                data.put("date", formattedDate);
+
+                                                dbRef.child("Reminders")
+                                                        .push()
+                                                        .setValue(data)
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void unused) {
+                                                                Toast.makeText(AddExpenseOrIncome.this, "Balance exceeded!", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        });
+                                            }
 
                                             tableName = "Expenses";
                                         }

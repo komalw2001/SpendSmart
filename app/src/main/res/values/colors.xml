@@ -10,4 +10,6 @@
 
     <color name="emeraldgreen">#016360</color>
     <color name="gray">#DEDEEC</color>
+    <color name="negative_balance">#EA002F</color>
+    <color name="negative_balance_night">#FF0000</color>
 </resources>

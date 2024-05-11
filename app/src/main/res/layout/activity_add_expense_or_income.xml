@@ -68,7 +68,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:hint="Amount"
+            android:hint="@string/enter_amount"
             android:background="@null"
             android:textSize="50sp"
             android:autoSizeMinTextSize="20sp"
