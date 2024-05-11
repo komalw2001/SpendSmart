@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black"
+    tools:context=".AddExpenseOrIncome">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_color_night"
+        >
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/back"
+            android:layout_margin="10dp"
+            android:id="@+id/btnCancelAdd"
+            ></ImageView>
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/expenses"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:background="@color/black"
+            android:textColor="@color/main_color_night"
+            android:fontFamily="@font/queensides"
+            android:gravity="center"
+            android:padding="10dp"
+            android:id="@+id/tvExpenses"
+            ></TextView>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/income"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:background="@color/main_color_night"
+            android:textColor="@color/black"
+            android:fontFamily="@font/queensides"
+            android:gravity="center"
+            android:padding="10dp"
+            android:id="@+id/tvIncome"
+            ></TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="Amount"
+            android:background="@null"
+            android:textSize="50sp"
+            android:autoSizeMinTextSize="20sp"
+            android:gravity="center"
+            android:inputType="numberDecimal"
+            android:layout_marginTop="30dp"
+            android:paddingVertical="10dp"
+            android:id="@+id/edAmount"
+            ></EditText>
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:backgroundTint="@color/main_color_night"
+            android:id="@+id/spCat"
+            ></Spinner>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:backgroundTint="@color/main_color_night"
+            android:text="Add Transaction"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:textSize="20sp"
+            android:id="@+id/btnAddConfirm"
+            android:textColor="@color/black"
+            ></Button>
+
+    </LinearLayout>
+
+
+</LinearLayout>
