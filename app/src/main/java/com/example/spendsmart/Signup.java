@@ -85,6 +85,7 @@ public class Signup extends AppCompatActivity {
                                 HashMap<Object, Object> data = new HashMap<>();
                                 data.put("email", email);
                                 data.put("password", password);
+                                data.put("balance", 0);
 
                                 reference.child("Users")
                                         .child(email)

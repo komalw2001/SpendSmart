@@ -1,8 +1,10 @@
 package com.example.spendsmart;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
@@ -123,6 +125,15 @@ public class DashboardActivity extends AppCompatActivity {
 //                bd.setNumber(0);
 //            }
 //        });
+
+        fabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(DashboardActivity.this, AddExpenseOrIncome.class);
+                startActivity(i);
+                finish();
+            }
+        });
     }
 
 }
