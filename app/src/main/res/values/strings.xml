@@ -12,4 +12,8 @@
     <string name="category">Category</string>
     <string name="transactions">Transaction History</string>
     <string name="enter_amount">Enter Amount</string>
+    <string name="cash_flow_overview">Cash Flow Overview</string>
+    <string name="last_30_days">Last 30 Days</string>
+    <string name="net_balance">Net Balance</string>
+    <string name="expense">Expense</string>
 </resources>

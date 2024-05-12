@@ -15,4 +15,5 @@
     <color name="positive_balance">#41A445</color>
     <color name="positive_balance_night">#5AC036</color>
     <color name="gray_night">#454553</color>
+    <color name="gray_mid">#95959B</color>
 </resources>
