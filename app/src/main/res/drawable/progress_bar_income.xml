@@ -12,7 +12,7 @@
     <item android:id="@android:id/progress">
         <clip>
             <shape>
-                <solid android:color="@color/positive_balance"/>
+                <solid android:color="@color/negative_balance"/>
                 <corners android:radius="4dp"/>
             </shape>
         </clip>

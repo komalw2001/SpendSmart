@@ -112,19 +112,6 @@
 
             </LinearLayout>
 
-                <ProgressBar
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:progress="0"
-                    style="@android:style/Widget.ProgressBar.Horizontal"
-                    android:progressDrawable="@drawable/progress_bar_income_night"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:id="@+id/pbIncome"
-                    ></ProgressBar>
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -163,12 +150,12 @@
                     android:layout_height="wrap_content"
                     android:progress="0"
                     style="@android:style/Widget.ProgressBar.Horizontal"
-                    android:progressDrawable="@drawable/progress_bar_expense_night"
+                    android:progressDrawable="@drawable/progress_bar_income_night"
                     android:layout_marginBottom="15dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="25dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:id="@+id/pbExpense"
+                    android:id="@+id/pbTotal"
                     ></ProgressBar>
 
 
