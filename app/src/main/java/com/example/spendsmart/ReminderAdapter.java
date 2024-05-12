@@ -9,12 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,6 +32,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.Remind
 
     ArrayList<Reminder> list;
     Context context;
+    String user;
 
     public ReminderAdapter(Context context) {
         this.context = context;
@@ -36,7 +40,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.Remind
         list = new ArrayList<>();
 
         SharedPreferences sp = context.getSharedPreferences("user_info",Context.MODE_PRIVATE);
-        String user = sp.getString("session_user",null);
+        user = sp.getString("session_user",null);
 
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Reminders");
         Query remindersQuery = dbRef.orderByChild("user").equalTo(user);
@@ -45,6 +49,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.Remind
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot reminderSnapshot : dataSnapshot.getChildren()) {
                     Reminder reminder = reminderSnapshot.getValue(Reminder.class);
+                    reminder.setKey(reminderSnapshot.getKey());
                     list.add(reminder);
                 }
                 Collections.reverse(list);
@@ -85,6 +90,29 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.Remind
             holder.ivReminderIcon.setImageResource(iconResourceId);
             holder.cvReminderIcon.setCardBackgroundColor(ContextCompat.getColor(context, R.color.positive_balance));
         }
+
+        holder.tvDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Reminder deletedReminder = list.remove(holder.getAdapterPosition());
+                notifyDataSetChanged();
+
+                DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
+                dbRef.child("Reminders").child(deletedReminder.getKey())
+                        .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(context, "Reminder Dismissed", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d("ReminderAdapter","Error: "+e.getMessage());
+                            }
+                        });
+            }
+        });
     }
 
     @Override
@@ -94,7 +122,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.Remind
 
     public class ReminderViewHolder extends RecyclerView.ViewHolder{
 
-        TextView tvReminderText, tvReminderTitle, tvReminderDate;
+        TextView tvReminderText, tvReminderTitle, tvReminderDate, tvDelete;
         ImageView ivReminderIcon;
         CardView cvReminderIcon;
 
@@ -104,6 +132,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.Remind
             tvReminderText = itemView.findViewById(R.id.tvReminderText);
             tvReminderTitle = itemView.findViewById(R.id.tvReminderTitle);
             tvReminderDate = itemView.findViewById(R.id.tvReminderDate);
+            tvDelete = itemView.findViewById(R.id.tvDismiss);
             ivReminderIcon = itemView.findViewById(R.id.ivReminderIcon);
             cvReminderIcon = itemView.findViewById(R.id.cvReminderIcon);
         }

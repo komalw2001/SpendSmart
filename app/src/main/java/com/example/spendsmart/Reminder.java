@@ -5,16 +5,27 @@ public class Reminder {
     int type;
     String user,date;
 
+    String key;
 
-    public Reminder(String title, String text, int type, String user, String date) {
+
+    public Reminder(String title, String text, int type, String user, String date, String key) {
         this.title = title;
         this.text = text;
         this.type = type;
         this.user = user;
         this.date = date;
+        this.key = key;
     }
 
     public Reminder() {
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getTitle() {
