@@ -4,22 +4,22 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:backgroundTint="@color/white"
-    app:cardCornerRadius="50dp"
+    app:cardCornerRadius="20dp"
     app:cardElevation="10dp"
-    android:layout_margin="15dp">
+    android:layout_margin="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:padding="15dp">
+        android:padding="10dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
             app:cardCornerRadius="100dp"
-            app:cardBackgroundColor="@color/main_color"
+            app:cardBackgroundColor="@color/negative_balance"
             android:id="@+id/cvReminderIcon"
             android:layout_marginLeft="10dp"
             >
@@ -45,17 +45,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="Reminder"
+                android:text="@string/reminder"
                 android:textStyle="bold"
                 android:textSize="18sp"
+                android:id="@+id/tvReminderTitle"
                 ></TextView>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="This is a reminder!!!!"
+                android:text="@string/reminder_text"
                 android:textSize="15sp"
+                android:id="@+id/tvReminderText"
+                ></TextView>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="dd/mm/yyyy 00:00:00"
+                android:textSize="15sp"
+                android:textColor="@color/gray_mid"
+                android:layout_marginTop="5dp"
+                android:id="@+id/tvReminderDate"
+                android:gravity="end"
                 ></TextView>
 
         </LinearLayout>

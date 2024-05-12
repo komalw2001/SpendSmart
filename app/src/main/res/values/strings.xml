@@ -16,4 +16,6 @@
     <string name="last_30_days">This Month</string>
     <string name="net_balance">Net Balance</string>
     <string name="expense">Expense</string>
+    <string name="reminder_text">This is a reminder!!!!</string>
+    <string name="reminder">Reminder</string>
 </resources>

@@ -116,9 +116,9 @@ public class ReportsFragment extends Fragment {
 
                 double net = totalIncome - totalExpense;
                 if (net < 0)
-                    tvNetBalance.setText("+" + net);
-                else
                     tvNetBalance.setText("" + net);
+                else
+                    tvNetBalance.setText("+" + net);
             }
 
             @Override
@@ -154,9 +154,9 @@ public class ReportsFragment extends Fragment {
 
                 double net = totalIncome - totalExpense;
                 if (net < 0)
-                    tvNetBalance.setText("+" + net);
-                else
                     tvNetBalance.setText("" + net);
+                else
+                    tvNetBalance.setText("+" + net);
             }
 
             @Override
