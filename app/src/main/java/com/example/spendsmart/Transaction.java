@@ -1,28 +1,27 @@
 package com.example.spendsmart;
 
 
-public class Expense {
-    private String amount;
+public class Transaction {
+    private double amount;
     private int category;
     private String date;
     private String user;
+    private String type;
 
-    public Expense() {
-        // Default constructor required for Firebase
-    }
+    public Transaction() {}
 
-    public Expense(String amount, int category, String date, String user) {
+    public Transaction(double amount, int category, String date, String user) {
         this.amount = amount;
         this.category = category;
         this.date = date;
         this.user = user;
     }
 
-    public String getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
@@ -48,5 +47,13 @@ public class Expense {
 
     public void setUser(String user) {
         this.user = user;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
