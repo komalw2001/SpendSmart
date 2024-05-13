@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
@@ -35,6 +36,8 @@ public class DashboardActivity extends AppCompatActivity {
 
     FloatingActionButton fabAdd;
 
+    ImageView settingsIcon;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +49,14 @@ public class DashboardActivity extends AppCompatActivity {
             return insets;
         });
 
+        settingsIcon = findViewById(R.id.settingsIcon);
+        settingsIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DashboardActivity.this, Settings.class);
+                startActivity(intent);
+            }
+        });
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

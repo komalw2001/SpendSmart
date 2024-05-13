@@ -15,7 +15,17 @@
         app:titleTextColor="@color/white"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:title="@string/app_name"/>
+        app:title="@string/app_name">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_settings_24"
+            android:layout_marginLeft="230sp"
+            android:id="@+id/settingsIcon"
+
+            />
+    </androidx.appcompat.widget.Toolbar>
 
 
     <com.google.android.material.tabs.TabLayout

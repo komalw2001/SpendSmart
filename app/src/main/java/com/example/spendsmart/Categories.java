@@ -1,10 +1,13 @@
 package com.example.spendsmart;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Categories {
     public static ArrayList<Category> expenseCategories = new ArrayList<>();
     public static ArrayList<Category> incomeCategories = new ArrayList<>();
+
+    public static ArrayList<Category> goalCategories = new ArrayList<>();
 
     static {
         expenseCategories.add(new Category("House Rent","#ff0000","cat_house_rent"));
@@ -37,5 +40,8 @@ public class Categories {
         incomeCategories.add(new Category("Sale","#fcbe03","cat_shopping"));
         incomeCategories.add(new Category("Loans and Grants","#ff7b00","cat_money"));
         incomeCategories.add(new Category("Other Sources","#000000","cat_others"));
+
+
+
     }
 }

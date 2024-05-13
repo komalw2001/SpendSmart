@@ -13,6 +13,21 @@
         android:theme="@style/Theme.SpendSmart"
         tools:targetApi="31">
         <activity
+            android:name=".SingleGoal"
+            android:exported="false" />
+        <activity
+            android:name=".appthemesettings"
+            android:exported="false" />
+        <activity
+            android:name=".changePasswor"
+            android:exported="false" />
+        <activity
+            android:name=".myProfile"
+            android:exported="false" />
+        <activity
+            android:name=".Settings"
+            android:exported="false" />
+        <activity
             android:name=".AddExpenseOrIncome"
             android:exported="false" />
         <activity
