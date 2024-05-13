@@ -117,10 +117,10 @@ public class CashFlowCategoryAdapter extends RecyclerView.Adapter<CashFlowCatego
 
         if(type == "expense")
         {
-            holder.tvCatAmount.setText("-"+list.get(position).getTotal());
+            holder.tvCatAmount.setText("-"+String.format("%.2f",list.get(position).getTotal()));
         }
         else {
-            holder.tvCatAmount.setText("+"+list.get(position).getTotal());
+            holder.tvCatAmount.setText("+"+String.format("%.2f",list.get(position).getTotal()));
         }
     }
 

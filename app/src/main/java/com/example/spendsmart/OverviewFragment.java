@@ -88,7 +88,7 @@ public class OverviewFragment extends Fragment
                                 }
                             }
 
-                            tvBalance.setText(String.format("%.0f", balance));
+                            tvBalance.setText(String.format("%.2f", balance));
                         }
                     }
 

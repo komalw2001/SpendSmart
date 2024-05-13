@@ -111,17 +111,18 @@ public class ReportsFragment extends Fragment {
                     }
                 }
 
-                tvReportExpense.setText("" + totalExpense);
-                tvExpense.setText("-" + totalExpense);
+                tvReportExpense.setText(String.format("%.2f",totalExpense));
+                tvExpense.setText("-" + String.format("%.2f",totalExpense));
 
                 int progress = (int) ((totalExpense / totalIncome) * 100);
                 pbTotal.setProgress(progress);
 
                 double net = totalIncome - totalExpense;
+                String netAmt = String.format("%.2f", net);
                 if (net < 0)
-                    tvNetBalance.setText("" + net);
+                    tvNetBalance.setText(netAmt);
                 else
-                    tvNetBalance.setText("+" + net);
+                    tvNetBalance.setText("+" + netAmt);
             }
 
             @Override
@@ -149,17 +150,18 @@ public class ReportsFragment extends Fragment {
                     }
                 }
 
-                tvReportIncome.setText("" + totalIncome);
-                tvIncome.setText("+" + totalIncome);
+                tvReportIncome.setText(String.format("%.2f",totalIncome));
+                tvIncome.setText("+" + String.format("%.2f",totalIncome));
 
                 int progress = (int) ((totalExpense / totalIncome) * 100);
                 pbTotal.setProgress(progress);
 
                 double net = totalIncome - totalExpense;
+                String netAmt = String.format("%.2f", net);
                 if (net < 0)
-                    tvNetBalance.setText("" + net);
+                    tvNetBalance.setText(netAmt);
                 else
-                    tvNetBalance.setText("+" + net);
+                    tvNetBalance.setText("+" + netAmt);
             }
 
             @Override
