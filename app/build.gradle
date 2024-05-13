@@ -59,4 +59,6 @@ dependencies {
     androidTestImplementation libs.espresso.core
     implementation libs.firebase.ui.database
     implementation libs.play.services.ads
+    implementation libs.eazegraph
+    implementation libs.library
 }
