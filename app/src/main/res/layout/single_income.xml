@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="5dp"
+    android:layout_marginBottom="10dp"
+    android:backgroundTint="@color/main_color"
+    app:cardCornerRadius="10dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_marginBottom="10dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Income"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:id="@+id/tvType"
+                ></TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Date"
+                android:gravity="end"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:id="@+id/tvDate"
+                ></TextView>
+
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:cardCornerRadius="10dp"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="+100000"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/positive_balance"
+                    android:layout_gravity="center"
+                    android:id="@+id/tvAmount"
+                    ></TextView>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:padding="7dp"
+                    android:layout_width="0dp"
+                    android:background="@color/white"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:text="@string/category"
+                        android:textSize="15sp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="15dp"
+                        android:textStyle="italic"
+                        android:id="@+id/tvCatName"
+                        ></TextView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="50dp"
+                        app:cardBackgroundColor="@color/main_color"
+                        android:id="@+id/cvCatIcon"
+                        android:layout_marginLeft="5dp"
+                        >
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/cat_others"
+                            android:id="@+id/ivCatIcon"
+                            android:layout_gravity="center"
+                            ></ImageView>
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+            </LinearLayout></androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

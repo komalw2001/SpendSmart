@@ -10,5 +10,12 @@
     <string name="expenses">Expenses</string>
     <string name="income">Income</string>
     <string name="category">Category</string>
-    <string name="transactions">Transactions</string>
+    <string name="transactions">Transaction History</string>
+    <string name="enter_amount">Enter Amount</string>
+    <string name="cash_flow_overview">Cash Flow Overview</string>
+    <string name="last_30_days">This Month</string>
+    <string name="net_balance">Net Balance</string>
+    <string name="expense">Expense</string>
+    <string name="reminder_text">This is a reminder!!!!</string>
+    <string name="reminder">Reminder</string>
 </resources>
