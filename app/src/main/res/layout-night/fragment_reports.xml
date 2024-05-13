@@ -37,7 +37,7 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="5dp"
                     android:textStyle="bold"
-                    android:textSize="18sp"></TextView>
+                    android:textSize="15sp"></TextView>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -46,7 +46,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginBottom="15dp"
                     android:textColor="@color/gray_mid"
-                    android:textSize="15sp"></TextView>
+                    android:textSize="12sp"></TextView>
 
                 <View
                     android:layout_width="match_parent"
@@ -61,7 +61,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginBottom="5dp"
                     android:text="@string/net_balance"
-                    android:textSize="15sp"
+                    android:textSize="12sp"
                     ></TextView>
 
                 <TextView
@@ -96,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/income"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
                     ></TextView>
 
@@ -105,7 +105,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
                     android:text="+0"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
                     android:gravity="end"
                     android:id="@+id/tvIncome"
@@ -129,7 +129,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/expense"
-                        android:textSize="18sp"
+                        android:textSize="15sp"
                         android:textStyle="bold"
                         ></TextView>
 
@@ -138,7 +138,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="4"
                         android:text="-0"
-                        android:textSize="18sp"
+                        android:textSize="15sp"
                         android:textStyle="bold"
                         android:gravity="end"
                         android:id="@+id/tvExpense"
@@ -189,7 +189,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="5dp"
             android:textStyle="bold"
-            android:textSize="18sp"></TextView>
+            android:textSize="15sp"></TextView>
 
         <TextView
             android:layout_width="match_parent"
@@ -198,7 +198,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginBottom="15dp"
             android:textColor="@color/gray_mid"
-            android:textSize="15sp"></TextView>
+            android:textSize="12sp"></TextView>
 
         <View
             android:layout_width="match_parent"
@@ -220,7 +220,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/income"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 ></TextView>
 
@@ -229,7 +229,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
                 android:text="0.0"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 android:gravity="end"
                 android:id="@+id/tvReportIncome"
@@ -259,7 +259,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/expense"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 ></TextView>
 
@@ -268,7 +268,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
                 android:text="0.0"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 android:gravity="end"
                 android:id="@+id/tvReportExpense"
