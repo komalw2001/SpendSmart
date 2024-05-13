@@ -3,12 +3,10 @@ package com.example.spendsmart;
 public class CashFlowCategory {
     Category category;
     double Total;
-    String type;
 
-    public CashFlowCategory(Category category, double total, String type) {
+    public CashFlowCategory(Category category, double total) {
         this.category = category;
         Total = total;
-        this.type = type;
     }
 
     public Category getCategory() {
@@ -25,13 +23,5 @@ public class CashFlowCategory {
 
     public void setTotal(double total) {
         Total = total;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 }

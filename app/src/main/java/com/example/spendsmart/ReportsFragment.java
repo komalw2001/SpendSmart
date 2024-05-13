@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -41,6 +42,8 @@ public class ReportsFragment extends Fragment {
     double totalIncome, totalExpense;
 
     DatabaseReference dbRef;
+
+    CashFlowCategoryAdapter incomeAdapter,expenseAdapter;
 
     public ReportsFragment(Context c) {
         context = c;
@@ -165,7 +168,18 @@ public class ReportsFragment extends Fragment {
             }
         });
 
+        rvExpense.setLayoutManager(new LinearLayoutManager(context));
+        rvIncome.setLayoutManager(new LinearLayoutManager(context));
 
+        rvExpense.setHasFixedSize(true);
+        rvIncome.setHasFixedSize(true);
 
+        expenseAdapter = new CashFlowCategoryAdapter(context,"expense",user);
+        incomeAdapter = new CashFlowCategoryAdapter(context,"income",user);
+
+        rvExpense.setAdapter(expenseAdapter);
+        rvIncome.setAdapter(incomeAdapter);
     }
+
+
 }
