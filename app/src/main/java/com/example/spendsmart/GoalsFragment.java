@@ -1,6 +1,10 @@
 package com.example.spendsmart;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,7 +19,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -29,16 +37,22 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
 public class GoalsFragment extends Fragment {
 
     Context context;
+
+    int selectedCategoryIndex = 0;
     RecyclerView rv;
     GoalAdapter goalAdapter;
-
     Button addNew;
+
+    Spinner spCat;
+
+    ImageButton editGoal;
 
     public GoalsFragment(Context c) {
         context = c;
@@ -63,54 +77,114 @@ public class GoalsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rv = view.findViewById(R.id.rvGoals);
         addNew = view.findViewById(R.id.createnewgoal);
-
+        editGoal = view.findViewById(R.id.editGoal);
 
         addNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Display a toast when addNew is clicked
-                Toast.makeText(getContext(), "Hello", Toast.LENGTH_SHORT).show();
-
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
-                //Hardcoding some goals here!
+                AlertDialog.Builder addContact = new AlertDialog.Builder(context);
 
-                HashMap<Object, Object> data = new HashMap<>();
-                data.put("goalName", "Accommodation");
-                data.put("totalGoal", 70000);
-                data.put("goalAchieved", 40000);
+                View view = LayoutInflater.from(context)
+                        .inflate(R.layout.activity_create_goal, null, false);
 
-                // Insert data into the "Goals" table
-                reference.child("Goals").push().setValue(data)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                // Data insertion successful
-                                Toast.makeText(context, "New goal created successfully!", Toast.LENGTH_SHORT).show();
-                                Log.d("Firebase", "Data inserted successfully");
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                // Data insertion failed
-                                Toast.makeText(context, "Error creating goal!", Toast.LENGTH_SHORT).show();
-                                Log.e("Firebase", "Error inserting data: " + e.getMessage());
-                            }
-                        });
+
+                EditText etName = view.findViewById(R.id.goalAmount);
+
+                ArrayList<Category> goalCategories;
+                CategoryAdapter adapter;
+                goalCategories = Categories.goalCategories;
+                adapter = new CategoryAdapter(context,goalCategories);
+                Spinner spinner = view.findViewById(R.id.spCat);
+                spinner.setAdapter(adapter);
+
+
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                        int selectedIndex = position;
+                        selectedCategoryIndex = position;
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parentView) {
+                        // Handle no selection
+                    }
+                });
+                addContact.setTitle("Create a New Goal");
+                addContact.setView(view);
+
+                addContact.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        EditText editText = view.findViewById(R.id.goalAmount);
+                        String gAmt = editText.getText().toString().trim();
+                        if (gAmt.isEmpty()) {
+                            return;
+                        }
+
+
+                        HashMap<Object, Object> data = new HashMap<>();
+                        data.put("goalName", Categories.goalCategories.get(selectedCategoryIndex).getName());
+                        int amt = Integer.valueOf(editText.getText().toString());
+
+                        data.put("totalGoal", amt);
+
+                        data.put("goalAchieved", 0);
+
+                        SharedPreferences sPref = requireContext().getSharedPreferences("user_info", MODE_PRIVATE);
+                        String uname = sPref.getString("session_user","");
+                        data.put("user",uname);
+
+                        // Insert data into the "Goals" table
+                        reference.child("Goals").push().setValue(data)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        // Data insertion successful
+                                        Toast.makeText(context, "New goal created successfully!", Toast.LENGTH_SHORT).show();
+                                        Log.d("Firebase", "Data inserted successfully");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        // Data insertion failed
+                                        Toast.makeText(context, "Error creating goal!", Toast.LENGTH_SHORT).show();
+                                        Log.e("Firebase", "Error inserting data: " + e.getMessage());
+                                    }
+                                });
+                    }
+                });
+
+                addContact.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Handle cancellation
+                    }
+                });
+
+                addContact.show();
             }
-
-
-
         });
+
+
+
         Query query = FirebaseDatabase.getInstance().getReference().child("Goals");
         FirebaseRecyclerOptions<Goal> options = new FirebaseRecyclerOptions.Builder<Goal>().setQuery(query,Goal.class).build();
-        goalAdapter = new GoalAdapter(options);
-        // Set up the RecyclerView with the adapter
+        goalAdapter = new GoalAdapter(options,context);
+
         rv.setLayoutManager(new LinearLayoutManager(getContext())); // Set LayoutManager if not set in XML
         rv.setAdapter(goalAdapter);
 
 
+        Query query1 = FirebaseDatabase.getInstance().getReference().child("Goals");
+        FirebaseRecyclerOptions<Goal> options1 = new FirebaseRecyclerOptions.Builder<Goal>().setQuery(query1,Goal.class).build();
+        goalAdapter = new GoalAdapter(options1,context);
+
+        rv.setLayoutManager(new LinearLayoutManager(getContext())); // Set LayoutManager if not set in XML
+        rv.setAdapter(goalAdapter);
 
     }
 

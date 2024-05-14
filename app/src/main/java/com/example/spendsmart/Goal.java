@@ -6,7 +6,8 @@ public class Goal {
     {
 
     }
-    public Goal(String goalName, int totalGoal, int goalAchieved) {
+    public Goal(String user, String goalName, int totalGoal, int goalAchieved) {
+        this.user = user;
         this.goalName = goalName;
         this.totalGoal = totalGoal;
         this.goalAchieved = goalAchieved;
@@ -42,6 +43,8 @@ public class Goal {
 
 
     public int goalAchieved;
+
+    public String user;
 
 
 
