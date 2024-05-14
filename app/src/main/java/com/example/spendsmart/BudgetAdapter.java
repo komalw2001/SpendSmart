@@ -6,15 +6,18 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,36 +31,48 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import android.widget.Spinner;
-import android.widget.Toast;
-
 import java.util.HashMap;
 
-public class GoalAdapter extends FirebaseRecyclerAdapter<Goal,GoalAdapter.GoalAdapterViewHolder> {
+public class BudgetAdapter extends FirebaseRecyclerAdapter<Budget,BudgetAdapter.BudgetAdapterViewHolder> {
 
     Context context;
-    public GoalAdapter(@NonNull FirebaseRecyclerOptions<Goal> options, Context c) {
+    public BudgetAdapter(@NonNull FirebaseRecyclerOptions<Budget> options, Context c) {
         super(options);
         this.context = c;
     }
 
-    @Override
-    protected void onBindViewHolder(@NonNull GoalAdapterViewHolder holder, int position, @NonNull Goal model) {
-        Log.e("Goal Adapter", "Goal Adapter onBindView Holder");
-        holder.gAmount.setText(model.getTotalGoal() + " PKR");
-        holder.gname.setText(model.getGoalName());
-//        holder.gCompletion.setText(model.getGoalAchieved() +" PKR achieved");
 
-        double percent = (double) model.getGoalAchieved() /model.getTotalGoal();
+
+    @NonNull
+    @Override
+    public BudgetAdapter.BudgetAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Log.d("Budget Adapter", "Budget Adapter ON CREATE View Holder");
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_singlebudget,parent,false);
+        return new BudgetAdapter.BudgetAdapterViewHolder(v);
+    }
+
+    @Override
+    protected void onBindViewHolder(@NonNull BudgetAdapterViewHolder holder, int position, @NonNull Budget model) {
+        Log.e("Budget Adapter", "Budget Adapter onBindView Holder");
+
+        holder.gAmount.setText(model.getTotalBudget() + " PKR");
+        holder.gname.setText(model.getBudgetName());
+
+        double percent = (double) model.getTotalSpent() /model.getTotalBudget();
         //Toast.makeText(context, percent + "", Toast.LENGTH_SHORT).show();
         percent = percent * 100;
         int p = (int) Math.ceil(percent);
         holder.progresbar.setProgress(p);
 
-        holder.gCompletion.setText(p + "%" + " completed");
+        if (percent>100) {
+            holder.gCompletion.setText("Status: Budget exceeded");
+            //set color red here
+            holder.progresbar.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+        }
+        else
+            holder.gCompletion.setText("Status: Within Budget");
 
-
-       holder.editGoal.setOnClickListener(new View.OnClickListener() {
+        holder.editGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder updateProgress = new AlertDialog.Builder(context);
@@ -65,7 +80,7 @@ public class GoalAdapter extends FirebaseRecyclerAdapter<Goal,GoalAdapter.GoalAd
                 View view = LayoutInflater.from(context)
                         .inflate(R.layout.activity_updateprogress, null, false);
 
-                updateProgress.setTitle("Update Goal Progress");
+                updateProgress.setTitle("Update Budget Spent");
                 updateProgress.setView(view);
 
                 updateProgress.setPositiveButton("Update", new DialogInterface.OnClickListener() {
@@ -79,40 +94,42 @@ public class GoalAdapter extends FirebaseRecyclerAdapter<Goal,GoalAdapter.GoalAd
                             return;
                         }
                         int amt = Integer.parseInt(gAmt);
-                        if (amt > model.getTotalGoal())
-                        {
-                            Toast.makeText(context,"Cannot exceed goal!",Toast.LENGTH_LONG).show();
-                            return;
-                        }
+
                         SharedPreferences sPref = context.getSharedPreferences("user_info", MODE_PRIVATE);
                         String uname = sPref.getString("session_user","");
 
                         HashMap<Object, Object> data = new HashMap<>();
                         data.put("user", uname);
 
-                        data.put("goalAchieved", amt);
+                        data.put("totalSpent", amt);
 
 
-                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Goals");
+                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Budget");
                         Query userGoalQuery = reference.orderByChild("user").equalTo(uname);
 
                         userGoalQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                    Goal goal = snapshot.getValue(Goal.class);
-                                    if (goal != null && goal.getGoalName().equals(model.getGoalName())) { // Check if the goal name matches
+                                    Budget goal = snapshot.getValue(Budget.class);
+                                    if (goal != null && goal.getBudgetName().equals(model.getBudgetName())) { // Check if the goal name matches
                                         // Update the goalAchieved amount
                                         int newAchievedAmount = amt;
-                                        snapshot.getRef().child("goalAchieved").setValue(newAchievedAmount);
+                                        snapshot.getRef().child("totalSpent").setValue(newAchievedAmount);
 
-                                        double percent = (double) amt /model.getTotalGoal();
+                                        double percent = (double) amt /model.getTotalBudget();
 
                                         percent = percent * 100;
                                         int p = (int) Math.ceil(percent);
                                         holder.progresbar.setProgress(p);
 
-                                        holder.gCompletion.setText(p + "%" + " completed");
+                                        if (percent>100) {
+                                            holder.gCompletion.setText("Status: Budget exceeded");
+                                            holder.progresbar.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+                                            //set color red here
+                                        }
+                                        else
+                                            holder.gCompletion.setText("Status: Within Budget");
 
 
                                     }
@@ -139,15 +156,7 @@ public class GoalAdapter extends FirebaseRecyclerAdapter<Goal,GoalAdapter.GoalAd
         });
     }
 
-    @NonNull
-    @Override
-    public GoalAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.d("Goal Adapter", "Goal Adapter ON CREATE View Holder");
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_single_goal,parent,false);
-        return new GoalAdapterViewHolder(v);
-    }
-
-    public class GoalAdapterViewHolder extends RecyclerView.ViewHolder{
+    public class BudgetAdapterViewHolder extends RecyclerView.ViewHolder{
         TextView gname,gAmount,gCompletion;
 
         ProgressBar progresbar;
@@ -155,7 +164,7 @@ public class GoalAdapter extends FirebaseRecyclerAdapter<Goal,GoalAdapter.GoalAd
 
         ImageButton editGoal;
 
-        GoalAdapterViewHolder(@NonNull View itemview)
+        BudgetAdapterViewHolder(@NonNull View itemview)
         {
             super(itemview);
             gname = itemview.findViewById(R.id.goalName);
@@ -166,9 +175,10 @@ public class GoalAdapter extends FirebaseRecyclerAdapter<Goal,GoalAdapter.GoalAd
 
             editGoal= itemview.findViewById(R.id.editGoal);
 
-            Log.d("Goal Adapter", "Goal Adapter View Holder");
+            Log.d("Budget Adapter", "Budget Adapter View Holder");
 
         }
 
     }
 }
+

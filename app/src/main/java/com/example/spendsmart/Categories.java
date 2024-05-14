@@ -9,6 +9,8 @@ public class Categories {
 
     public static ArrayList<Category> goalCategories = new ArrayList<>();
 
+    public static ArrayList<Category> budgetCategories = new ArrayList<>();
+
     static {
         expenseCategories.add(new Category("House Rent","#ff0000","cat_house_rent"));
         expenseCategories.add(new Category("Shopping","#6100e0","cat_shopping"));
@@ -42,6 +44,20 @@ public class Categories {
         incomeCategories.add(new Category("Other Sources","#000000","cat_others"));
 
 
+        goalCategories.add(new Category("Retirement","#36998d","cat_money"));
+        goalCategories.add(new Category("Rent","#ff0000","cat_house_rent"));
+        goalCategories.add(new Category("Housing","#914d0d","cat_env"));
+        goalCategories.add(new Category("Education","#6100e0","cat_money"));
+        goalCategories.add(new Category("Travel","#6100e0","cat_vehicle"));
+        goalCategories.add(new Category("Healthcare","#6100e0","cat_health"));
+        goalCategories.add(new Category("Other","#000000","cat_others"));
+
+
+        budgetCategories.add(new Category("Medical Budget","#6100e0","cat_health"));
+        budgetCategories.add(new Category("Food Budget","#ff0000","cat_food_drink"));
+        budgetCategories.add(new Category("Recreation","#6100e0","cat_money"));
+        budgetCategories.add(new Category("Fuel Budget","#ff0000","cat_vehicle"));
+        goalCategories.add(new Category("Other","#000000","cat_others"));
 
     }
 }

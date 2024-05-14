@@ -31,7 +31,7 @@
             <ImageView
                 android:layout_width="45dp"
                 android:layout_height="80dp"
-                android:src="@drawable/baseline_keyboard_double_arrow_right_24"
+                android:src="@drawable/baseline_money_off_24"
                 android:paddingLeft="10dp"
                 android:paddingRight="5dp" />
 
@@ -85,7 +85,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="40% completed"
+                    android:text="Status: Within Budget"
                     android:textSize="10sp"
                     android:id="@+id/completionStatus"
 
