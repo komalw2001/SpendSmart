@@ -65,6 +65,10 @@ public class ReminderAdapter extends FirebaseRecyclerAdapter<Reminder, ReminderA
             holder.ivReminderIcon.setImageResource(R.drawable.reminder2);
             holder.cvReminderIcon.setCardBackgroundColor(context.getColor(R.color.positive_balance));
         }
+        else if (model.getType() == 3) {
+            holder.ivReminderIcon.setImageResource(R.drawable.reminder3);
+            holder.cvReminderIcon.setCardBackgroundColor(context.getColor(R.color.blue));
+        }
 
         holder.tvDelete.setOnClickListener(new View.OnClickListener() {
             @Override
