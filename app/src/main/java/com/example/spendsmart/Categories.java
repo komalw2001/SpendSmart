@@ -12,25 +12,25 @@ public class Categories {
     public static ArrayList<Category> budgetCategories = new ArrayList<>();
 
     static {
-        expenseCategories.add(new Category("House Rent","#ff0000","cat_house_rent"));
+        expenseCategories.add(new Category("House Rent","#c74664","cat_house_rent"));
         expenseCategories.add(new Category("Shopping","#6100e0","cat_shopping"));
-        expenseCategories.add(new Category("Food and Drinks","#fcbe03","cat_food_drink"));
-        expenseCategories.add(new Category("Clothes and Shoes","#6100e0","cat_clothes_shoes"));
-        expenseCategories.add(new Category("Investments","#ff7b00","cat_env"));
+        expenseCategories.add(new Category("Food and Drinks","#d111d1","cat_food_drink"));
+        expenseCategories.add(new Category("Clothes and Shoes","#a1bf1d","cat_clothes_shoes"));
+        expenseCategories.add(new Category("Investments","#7d5929","cat_env"));
         expenseCategories.add(new Category("Medicines","#36998d","cat_health"));
         expenseCategories.add(new Category("Pets","#ff00a2","cat_pets"));
         expenseCategories.add(new Category("Fees","#ff0000","cat_money"));
-        expenseCategories.add(new Category("Groceries","#6100e0","cat_shopping"));
+        expenseCategories.add(new Category("Groceries","#2196ad","cat_shopping"));
         expenseCategories.add(new Category("Utilities","#fcbe03","cat_util"));
-        expenseCategories.add(new Category("Transportation and Fuel","#ff7b00","cat_vehicle"));
-        expenseCategories.add(new Category("Housing","#fcbe03","cat_house_rent"));
-        expenseCategories.add(new Category("Insurance","#6100e0","cat_money"));
+        expenseCategories.add(new Category("Transportation and Fuel","#cf6342","cat_vehicle"));
+        expenseCategories.add(new Category("Housing","#0d13a8","cat_house_rent"));
+        expenseCategories.add(new Category("Insurance","#bd982a","cat_money"));
         expenseCategories.add(new Category("Vehicle","#0074e8","cat_vehicle"));
-        expenseCategories.add(new Category("Doctor","#36998d","cat_health"));
-        expenseCategories.add(new Category("Loans","#6100e0","cat_money"));
-        expenseCategories.add(new Category("Entertainment","#ff00a2","cat_entertainment"));
-        expenseCategories.add(new Category("Internet and Phone","#0074e8","cat_phone_internet"));
-        expenseCategories.add(new Category("Taxes","#914d0d","cat_money"));
+        expenseCategories.add(new Category("Doctor","#5c9c6f","cat_health"));
+        expenseCategories.add(new Category("Loans","#bbbd4f","cat_money"));
+        expenseCategories.add(new Category("Entertainment","#d111d1","cat_entertainment"));
+        expenseCategories.add(new Category("Internet and Phone","#31ced4","cat_phone_internet"));
+        expenseCategories.add(new Category("Taxes","#ff7b00","cat_money"));
         expenseCategories.add(new Category("Mortgage","#914d0d","cat_house_rent"));
         expenseCategories.add(new Category("Others","#000000","cat_others"));
 

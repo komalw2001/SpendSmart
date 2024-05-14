@@ -239,6 +239,12 @@ public class OverviewFragment extends Fragment
 
         pieChart.getDescription().setTextSize(11);
 
+        if (isNightModeActive()) {
+            pieChart.setHoleColor(Color.BLACK);
+            pieChart.setCenterTextColor(Color.WHITE);
+            pieChart.getDescription().setTextColor(Color.WHITE);
+        }
+
         pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
