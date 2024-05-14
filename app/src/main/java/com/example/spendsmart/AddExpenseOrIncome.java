@@ -186,14 +186,12 @@ public class AddExpenseOrIncome extends AppCompatActivity {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // User clicked Yes, proceed with adding the expense
                 addExpense();
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // User clicked No, do nothing
             }
         });
         AlertDialog dialog = builder.create();
