@@ -99,7 +99,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     public void onBindViewHolder(@NonNull TransactionViewHolder viewHolder, int position) {
 
         if (list.get(position).getType().equals("income") ){
-            viewHolder.tvAmount.setText("+"+String.format("%.0f", list.get(position).getAmount()));
+            viewHolder.tvAmount.setText("+"+String.format("%.2f", list.get(position).getAmount()));
             viewHolder.tvType.setText("Income");
             viewHolder.tvCatName.setText(Categories.incomeCategories.get(list.get(position).getCategory()).getName());
 
@@ -117,7 +117,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             viewHolder.cvCatIcon.setCardBackgroundColor(Color.parseColor(Categories.incomeCategories.get(list.get(position).getCategory()).getColor()));
         }
         else {
-            viewHolder.tvAmount.setText("-"+String.format("%.0f", list.get(position).getAmount()));
+            viewHolder.tvAmount.setText("-"+String.format("%.2f", list.get(position).getAmount()));
             viewHolder.tvType.setText("Expense");
             viewHolder.tvCatName.setText(Categories.expenseCategories.get(list.get(position).getCategory()).getName());
 

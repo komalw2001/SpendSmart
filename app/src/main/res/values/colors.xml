@@ -18,4 +18,6 @@
     <color name="gray_mid">#95959B</color>
     <color name="blue">#2038BE</color>
     <color name="blue_night">#3553FF</color>
+    <color name="white_transparent">#7AFFFFFF</color>
+    <color name="black_transparent">#8B000000</color>
 </resources>
