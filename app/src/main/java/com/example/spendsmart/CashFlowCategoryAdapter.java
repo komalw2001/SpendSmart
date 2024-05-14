@@ -22,8 +22,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 
 public class CashFlowCategoryAdapter extends RecyclerView.Adapter<CashFlowCategoryAdapter.CashFlowViewHolder> {
 
@@ -51,11 +55,26 @@ public class CashFlowCategoryAdapter extends RecyclerView.Adapter<CashFlowCatego
             expenseQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Calendar cal = Calendar.getInstance();
+                    int currentMonth = cal.get(Calendar.MONTH);
+                    int currentYear = cal.get(Calendar.YEAR);
                     for (DataSnapshot expenseSnapshot : snapshot.getChildren()) {
                         Transaction expense = expenseSnapshot.getValue(Transaction.class);
-                        int catIndex = expense.getCategory();
-                        double curr = list.get(catIndex).getTotal();
-                        list.get(catIndex).setTotal(curr+expense.getAmount());
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                        try {
+                            Date expenseDate = dateFormat.parse(expense.getDate());
+                            cal.setTime(expenseDate);
+                            int expenseMonth = cal.get(Calendar.MONTH);
+                            int expenseYear = cal.get(Calendar.YEAR);
+
+                            if (expenseMonth == currentMonth && expenseYear == currentYear) {
+                                int catIndex = expense.getCategory();
+                                double curr = list.get(catIndex).getTotal();
+                                list.get(catIndex).setTotal(curr + expense.getAmount());
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                     }
                     notifyDataSetChanged();
                 }

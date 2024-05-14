@@ -53,7 +53,7 @@ public class BudgetAdapter extends FirebaseRecyclerAdapter<Budget,BudgetAdapter.
 
     @Override
     protected void onBindViewHolder(@NonNull BudgetAdapterViewHolder holder, int position, @NonNull Budget model) {
-        Log.e("Budget Adapter", "Budget Adapter onBindView Holder");
+        Log.d("Budget Adapter", "Budget Adapter onBindView Holder");
 
         holder.gAmount.setText(model.getTotalBudget() + " PKR");
         holder.gname.setText(model.getBudgetName());

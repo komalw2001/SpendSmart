@@ -212,6 +212,7 @@ public class AddExpenseOrIncome extends AppCompatActivity {
                                                 data.put("date", formattedDate);
 
                                                 dbRef.child("Reminders")
+                                                        .child(user)
                                                         .push()
                                                         .setValue(data)
                                                         .addOnSuccessListener(new OnSuccessListener<Void>() {

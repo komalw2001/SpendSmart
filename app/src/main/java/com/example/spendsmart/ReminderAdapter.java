@@ -2,7 +2,6 @@ package com.example.spendsmart;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,55 +12,36 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.database.SnapshotParser;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
-public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ReminderViewHolder> {
+public class ReminderAdapter extends FirebaseRecyclerAdapter<Reminder, ReminderAdapter.ReminderViewHolder> {
 
-    ArrayList<Reminder> list;
     Context context;
     String user;
 
-    public ReminderAdapter(Context context) {
+
+
+    public ReminderAdapter(@NonNull FirebaseRecyclerOptions<Reminder> options, Context context) {
+        super(options);
         this.context = context;
-
-        list = new ArrayList<>();
-
-        SharedPreferences sp = context.getSharedPreferences("user_info",Context.MODE_PRIVATE);
-        user = sp.getString("session_user",null);
-
-        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Reminders");
-        Query remindersQuery = dbRef.orderByChild("user").equalTo(user);
-        remindersQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot reminderSnapshot : dataSnapshot.getChildren()) {
-                    Reminder reminder = reminderSnapshot.getValue(Reminder.class);
-                    reminder.setKey(reminderSnapshot.getKey());
-                    list.add(reminder);
-                }
-                Collections.reverse(list);
-                notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.d("ReminderAdapter", "Database error: " + databaseError.getMessage());
-            }
-        });
+        SharedPreferences sp = context.getSharedPreferences("user_info", Context.MODE_PRIVATE);
+        user = sp.getString("session_user", null);
     }
+
+
 
     @NonNull
     @Override
@@ -73,32 +53,24 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.Remind
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ReminderViewHolder holder, int position) {
-        holder.tvReminderText.setText(list.get(position).getText());
-        holder.tvReminderTitle.setText(list.get(position).getTitle());
-        holder.tvReminderDate.setText(list.get(position).getDate());
+    protected void onBindViewHolder(@NonNull ReminderViewHolder holder, int i, @NonNull Reminder model) {
+        holder.tvReminderText.setText(model.getText());
+        holder.tvReminderTitle.setText(model.getTitle());
+        holder.tvReminderDate.setText(model.getDate());
 
-        if (list.get(position).getType() == 1)
-        {
-            int iconResourceId = context.getResources().getIdentifier("reminder1", "drawable", context.getPackageName());
-            holder.ivReminderIcon.setImageResource(iconResourceId);
-            holder.cvReminderIcon.setCardBackgroundColor(ContextCompat.getColor(context, R.color.negative_balance));
-        }
-        else if (list.get(position).getType() == 2)
-        {
-            int iconResourceId = context.getResources().getIdentifier("reminder2", "drawable", context.getPackageName());
-            holder.ivReminderIcon.setImageResource(iconResourceId);
-            holder.cvReminderIcon.setCardBackgroundColor(ContextCompat.getColor(context, R.color.positive_balance));
+        if (model.getType() == 1) {
+            holder.ivReminderIcon.setImageResource(R.drawable.reminder1);
+            holder.cvReminderIcon.setCardBackgroundColor(context.getColor(R.color.negative_balance));
+        } else if (model.getType() == 2) {
+            holder.ivReminderIcon.setImageResource(R.drawable.reminder2);
+            holder.cvReminderIcon.setCardBackgroundColor(context.getColor(R.color.positive_balance));
         }
 
         holder.tvDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Reminder deletedReminder = list.remove(holder.getAdapterPosition());
-                notifyDataSetChanged();
-
                 DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
-                dbRef.child("Reminders").child(deletedReminder.getKey())
+                dbRef.child("Reminders").child(user).child(getRef(holder.getAdapterPosition()).getKey())
                         .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
@@ -108,19 +80,15 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.Remind
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Log.d("ReminderAdapter","Error: "+e.getMessage());
+                                Log.d("ReminderAdapter", "Error: " + e.getMessage());
                             }
                         });
             }
         });
     }
 
-    @Override
-    public int getItemCount() {
-        return list.size();
-    }
 
-    public class ReminderViewHolder extends RecyclerView.ViewHolder{
+    public class ReminderViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvReminderText, tvReminderTitle, tvReminderDate, tvDelete;
         ImageView ivReminderIcon;

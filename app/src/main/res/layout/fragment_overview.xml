@@ -63,8 +63,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/expenses"
-                android:textSize="18sp"
+                android:text="@string/expenses_monthly"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_margin="10dp"
                 ></TextView>
@@ -76,11 +76,12 @@
             android:layout_margin="20dp"
             android:id="@+id/llPieChart">
 
-            <org.eazegraph.lib.charts.PieChart
+            <com.github.mikephil.charting.charts.PieChart
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
+                android:layout_marginTop="10dp"
                 android:id="@+id/pcExpenses"
-                ></org.eazegraph.lib.charts.PieChart>
+                ></com.github.mikephil.charting.charts.PieChart>
 
         </LinearLayout>
         </androidx.cardview.widget.CardView>
