@@ -61,4 +61,6 @@ dependencies {
     implementation libs.play.services.ads
     implementation libs.eazegraph
     implementation libs.library
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
 }

@@ -157,6 +157,7 @@ public class OverviewFragment extends Fragment
         return nightModeFlags == Configuration.UI_MODE_NIGHT_YES;
     }
 
+
     private void updatePieChart(View view) {
         List<PieModel> pieModelList = new ArrayList<>();
 
