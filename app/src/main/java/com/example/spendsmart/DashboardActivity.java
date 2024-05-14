@@ -1,11 +1,13 @@
 package com.example.spendsmart;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
@@ -48,6 +50,8 @@ public class DashboardActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+
 
         settingsIcon = findViewById(R.id.settingsIcon);
         settingsIcon.setOnClickListener(new View.OnClickListener() {
@@ -142,9 +146,16 @@ public class DashboardActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(DashboardActivity.this, AddExpenseOrIncome.class);
                 startActivity(i);
-                finish();
             }
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sp = getSharedPreferences("user_info",MODE_PRIVATE);
+        if (sp.getBoolean("logged_in",false)==false){
+            finish();
+        }
+    }
 }

@@ -103,6 +103,7 @@ public class Signup extends AppCompatActivity {
                                                 editor.apply();
                                                 Intent intent = new Intent(Signup.this, DashboardActivity.class);
                                                 startActivity(intent);
+                                                finish();
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
