@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".myProfile"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/black">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,52 +23,54 @@
             android:src="@drawable/back"
             android:paddingLeft="18sp"
             android:id="@+id/backbtn"
-            android:backgroundTint="@color/emeraldgreen"
+            android:background="@color/emeraldgreen"
             >
 
         </ImageButton>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Profile Settings"
+            android:text="App Theme Settings"
             android:textColor="@color/white"
-            android:textStyle="bold"
             android:paddingLeft="10dp"
-            android:paddingTop="10dp"
+            android:textStyle="bold"
             android:textSize="18sp"
+
             >
 
         </TextView>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="350dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="20sp"
         android:orientation="vertical"
-        android:padding="30dp">
-
-
-        <ImageView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="40dp"
-
-            android:background="@drawable/circular_border"
-            android:src="@drawable/baseline_person_24" />
-
-
+        >
         <TextView
-            android:id="@+id/fullName"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Set your color preferences: "
+            android:paddingBottom="6sp"
+            android:textStyle="bold"
+            />
+        <RadioGroup
+            android:id="@+id/themeRadioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="6sp"
-            android:padding="10dp"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginLeft="110dp"
-            android:text="Default Username" />
+            android:orientation="vertical">
 
+            <RadioButton
+                android:id="@+id/lightModeRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Light Mode"/>
 
+            <RadioButton
+                android:id="@+id/darkModeRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dark Mode"/>
+        </RadioGroup>
     </LinearLayout>
 </LinearLayout>

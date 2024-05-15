@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class Settings extends AppCompatActivity {
 
-    TextView profile,password,theme,logout;
+    TextView profile,password,logout;
+    ImageButton backbtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +24,15 @@ public class Settings extends AppCompatActivity {
 
     protected void init()
     {
+        backbtn = findViewById(R.id.backbtn);
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Settings.this,DashboardActivity.class);
+                startActivity(intent);
+            }
+        });
+
         profile = findViewById(R.id.profileSettings);
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,14 +51,7 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-        theme = findViewById(R.id.appthemesettings);
-        theme.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Settings.this, appthemesettings.class);
-                startActivity(intent);
-            }
-        });
+
 
         logout = findViewById(R.id.logoutbtn);
         logout.setOnClickListener(new View.OnClickListener() {

@@ -1,7 +1,11 @@
 plugins {
-    alias(libs.plugins.androidApplication)
+    id 'com.android.application'
     id 'com.google.gms.google-services'
 }
+
+
+
+
 
 
 
@@ -13,12 +17,20 @@ android {
 
 
 
+
+
+
+
     defaultConfig {
         applicationId "com.example.spendsmart"
         minSdk 24
         targetSdk 34
         versionCode 1
         versionName "1.0"
+
+
+
+
 
 
 
@@ -44,7 +56,15 @@ android {
 
 
 
+
+
+
+
 dependencies {
+
+
+
+
 
 
 
@@ -58,9 +78,13 @@ dependencies {
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
     implementation libs.firebase.ui.database
-    implementation libs.play.services.ads
+    implementation "com.google.android.gms:play-services-ads:23.1.0"
     implementation libs.eazegraph
     implementation libs.library
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+//    implementation 'com.google.guava:guava:31.0.1-android'
+
+
+
 
 }

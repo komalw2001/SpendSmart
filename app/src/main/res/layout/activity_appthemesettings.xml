@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".myProfile"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,20 +17,24 @@
         android:paddingBottom="15dp"
         >
 
-        <ImageView
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_color_lens_24"
+            android:src="@drawable/back"
             android:paddingLeft="18sp"
+            android:id="@+id/backbtn"
+            android:background="@color/emeraldgreen"
             >
 
-        </ImageView>
+        </ImageButton>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="App Theme Settings"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:paddingLeft="10dp"
+            android:textStyle="bold"
+            android:textSize="18sp"
 
             >
 
