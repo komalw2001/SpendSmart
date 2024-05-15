@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    alias(libs.plugins.androidApplication)
     id 'com.google.gms.google-services'
 }
 
@@ -41,6 +41,10 @@ android {
 
 
 
+
+
+
+
     buildTypes {
         release {
             minifyEnabled false
@@ -78,11 +82,10 @@ dependencies {
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
     implementation libs.firebase.ui.database
-    implementation "com.google.android.gms:play-services-ads:23.1.0"
+    implementation libs.play.services.ads
     implementation libs.eazegraph
     implementation libs.library
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'com.google.guava:guava:31.0.1-android'
-
 
 }

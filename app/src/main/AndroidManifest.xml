@@ -36,9 +36,6 @@
             android:name=".SingleGoal"
             android:exported="false" />
         <activity
-            android:name=".appthemesettings"
-            android:exported="false" />
-        <activity
             android:name=".changePasswor"
             android:exported="false" />
         <activity

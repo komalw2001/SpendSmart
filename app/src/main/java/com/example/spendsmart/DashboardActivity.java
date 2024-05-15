@@ -112,11 +112,6 @@ public class DashboardActivity extends AppCompatActivity {
                     {
                         tab.setText("Reminders");
                         tab.setIcon(R.drawable.baseline_announcement_24);
-//                        BadgeDrawable badgeDrawable = tab.getOrCreateBadge();
-//                        badgeDrawable.setNumber(51);
-//                        badgeDrawable.setBackgroundColor(getResources().getColor(R.color.red, getTheme()));
-//                        badgeDrawable.setMaxCharacterCount(3);
-//                        badgeDrawable.setVisible(true);
                         break;
                     }
                     default:
@@ -130,16 +125,6 @@ public class DashboardActivity extends AppCompatActivity {
         });
 
         mediator.attach();
-
-//        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-//            @Override
-//            public void onPageSelected(int position) {
-//                super.onPageSelected(position);
-//                BadgeDrawable bd = Objects.requireNonNull(tabLayout.getTabAt(position)).getOrCreateBadge();
-//                bd.setVisible(false);
-//                bd.setNumber(0);
-//            }
-//        });
 
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override

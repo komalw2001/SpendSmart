@@ -6,7 +6,7 @@
     tools:context=".GoalsFragment"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/gray"
+    android:background="@color/gray_night"
     android:padding="10dp">
 
     <LinearLayout
@@ -58,10 +58,11 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/emeraldgreen"
                     android:text="+ Create New Goal"
-                    android:layout_marginLeft="160dp"
+                    android:layout_gravity="end"
                     android:textSize="13sp"
                     android:padding="10sp"
                     android:id="@+id/createnewgoal"
+                    android:textColor="@color/white"
                     >
 
                 </Button>

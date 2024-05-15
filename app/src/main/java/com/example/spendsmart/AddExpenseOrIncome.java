@@ -217,9 +217,16 @@ public class AddExpenseOrIncome extends AppCompatActivity {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             String formattedDate = dateFormat.format(currentDate);
 
+            Double amtt = Double.parseDouble(amt);
+
+            if (amtt <=0){
+                Toast.makeText(this,"Please enter a valid amount!",Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             HashMap<Object, Object> data = new HashMap<>();
             data.put("user",user);
-            data.put("amount",Double.parseDouble(amt));
+            data.put("amount",amtt);
             data.put("category",selectedCategoryIndex);
             data.put("date",formattedDate);
 
