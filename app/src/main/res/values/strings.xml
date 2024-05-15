@@ -18,4 +18,5 @@
     <string name="expense">Expense</string>
     <string name="reminder_text">This is a reminder!!!!</string>
     <string name="reminder">Reminder</string>
+    <string name="expenses_monthly">Expenses (This Month)</string>
 </resources>

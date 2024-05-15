@@ -20,8 +20,18 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.interfaces.datasets.IPieDataSet;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,10 +39,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import org.eazegraph.lib.charts.PieChart;
-import org.eazegraph.lib.models.PieModel;
+//import org.eazegraph.lib.charts.PieChart;
+//import org.eazegraph.lib.models.PieModel;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -136,9 +150,26 @@ public class OverviewFragment extends Fragment
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot expenseSnapshot : snapshot.getChildren()) {
                     Transaction expense = expenseSnapshot.getValue(Transaction.class);
-                    int catIndex = expense.getCategory();
-                    double curr = list.get(catIndex).getTotal();
-                    list.get(catIndex).setTotal(curr+expense.getAmount());
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                    Date expenseDate;
+                    try {
+                        expenseDate = dateFormat.parse(expense.getDate());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                        return;
+                    }
+
+                    Calendar cal = Calendar.getInstance();
+                    int currentMonth = cal.get(Calendar.MONTH);
+                    int currentYear = cal.get(Calendar.YEAR);
+                    cal.setTime(expenseDate);
+                    int expenseMonth = cal.get(Calendar.MONTH);
+                    int expenseYear = cal.get(Calendar.YEAR);
+                    if (currentMonth == expenseMonth && currentYear == expenseYear) {
+                        int catIndex = expense.getCategory();
+                        double curr = list.get(catIndex).getTotal();
+                        list.get(catIndex).setTotal(curr + expense.getAmount());
+                    }
                 }
 
                 updatePieChart(view);
@@ -161,25 +192,102 @@ public class OverviewFragment extends Fragment
         return nightModeFlags == Configuration.UI_MODE_NIGHT_YES;
     }
 
-
     private void updatePieChart(View view) {
-        List<PieModel> pieModelList = new ArrayList<>();
+        List<PieEntry> pieEntries = new ArrayList<>();
+        ArrayList<Integer> colors = new ArrayList<>();
+        float total = 0;
 
         for (CashFlowCategory category : list) {
-            PieModel pieModel = new PieModel(category.getCategory().getName(), (float) category.getTotal(), Color.parseColor(category.getCategory().getColor()));
-            pieModelList.add(pieModel);
+            total += category.getTotal();
+        }
+
+        float threshold = total * 0.01f; // 1% threshold
+        float otherCategoriesValue = 0;
+
+        for (CashFlowCategory category : list) {
+            if (category.getTotal() >= threshold) {
+                pieEntries.add(new PieEntry((float) category.getTotal(), category.getCategory().getName()));
+                colors.add(Color.parseColor(category.getCategory().getColor()));
+            } else {
+                otherCategoriesValue += category.getTotal();
+            }
+        }
+
+        if (otherCategoriesValue > 0) {
+            pieEntries.add(new PieEntry(otherCategoriesValue, "Other Categories"));
+            colors.add(Color.GRAY);
         }
 
         PieChart pieChart = view.findViewById(R.id.pcExpenses);
+        pieChart.setHighlightPerTapEnabled(true);
 
-        pieChart.clearChart();
+        pieChart.clear();
 
-        for (PieModel pieModel : pieModelList) {
-            pieChart.addPieSlice(pieModel);
+        PieDataSet dataSet = new PieDataSet(pieEntries, "Expenses");
+        dataSet.setColors(colors);
+        PieData data = new PieData(dataSet);
+
+        pieChart.setDrawEntryLabels(false);
+        pieChart.setUsePercentValues(true);
+
+        pieChart.setCenterText("%");
+        pieChart.setData(data);
+        pieChart.getDescription().setText("");
+        pieChart.getLegend().setEnabled(false);
+
+        pieChart.setHoleRadius(30);
+        pieChart.setTransparentCircleRadius(45);
+
+        pieChart.invalidate();
+        pieChart.animateY(1000);
+
+        pieChart.getDescription().setTextSize(11);
+
+        if (isNightModeActive()) {
+            pieChart.setHoleColor(Color.BLACK);
+            pieChart.setCenterTextColor(Color.WHITE);
+            pieChart.getDescription().setTextColor(Color.WHITE);
         }
 
-        pieChart.startAnimation();
+        pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                PieEntry pieEntry = (PieEntry) e;
+                pieChart.getDescription().setText(pieEntry.getLabel() + ": " + pieEntry.getValue());
+            }
+
+            @Override
+            public void onNothingSelected() {
+                pieChart.getDescription().setText("");
+            }
+        });
     }
+
+
+
+
+
+
+
+
+//    private void updatePieChart(View view) {
+//        List<PieModel> pieModelList = new ArrayList<>();
+//
+//        for (CashFlowCategory category : list) {
+//            PieModel pieModel = new PieModel(category.getCategory().getName(), (float) category.getTotal(), Color.parseColor(category.getCategory().getColor()));
+//            pieModelList.add(pieModel);
+//        }
+//
+//        PieChart pieChart = view.findViewById(R.id.pcExpenses);
+//
+//        pieChart.clearChart();
+//
+//        for (PieModel pieModel : pieModelList) {
+//            pieChart.addPieSlice(pieModel);
+//        }
+//
+//        pieChart.startAnimation();
+//    }
 
 
 }

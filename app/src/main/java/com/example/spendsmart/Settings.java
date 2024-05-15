@@ -67,7 +67,7 @@ public class Settings extends AppCompatActivity {
                 Toast.makeText(Settings.this, "Logging out!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Settings.this, Login.class);
                 startActivity(intent);
-
+                finish();
 
             }
         });

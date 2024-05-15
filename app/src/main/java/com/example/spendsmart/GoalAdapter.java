@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +32,9 @@ import com.google.firebase.database.ValueEventListener;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 public class GoalAdapter extends FirebaseRecyclerAdapter<Goal,GoalAdapter.GoalAdapterViewHolder> {
@@ -43,7 +47,7 @@ public class GoalAdapter extends FirebaseRecyclerAdapter<Goal,GoalAdapter.GoalAd
 
     @Override
     protected void onBindViewHolder(@NonNull GoalAdapterViewHolder holder, int position, @NonNull Goal model) {
-        Log.e("Goal Adapter", "Goal Adapter onBindView Holder");
+        Log.d("Goal Adapter", "Goal Adapter onBindView Holder");
         holder.gAmount.setText(model.getTotalGoal() + " PKR");
         holder.gname.setText(model.getGoalName());
         double percent = (double) model.getGoalAchieved() /model.getTotalGoal();
@@ -118,14 +122,39 @@ public class GoalAdapter extends FirebaseRecyclerAdapter<Goal,GoalAdapter.GoalAd
 
                                         holder.gCompletion.setText(p + "%" + " completed");
 
+                                        Log.d("GOALADAPTER","-BEFOREREMINDER");
 
+                                        // REMINDER THAT GOAL EXCEEDED
+
+                                        Calendar calendar = Calendar.getInstance();
+                                        Date currentDate = calendar.getTime();
+                                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                                        String formattedDate = dateFormat.format(currentDate);
+
+                                       // Toast.makeText(context, "helllooo", Toast.LENGTH_SHORT).show();
+
+                                        if (percent >= 100){
+                                            //Toast.makeText(context, "% "+percent, Toast.LENGTH_SHORT).show();
+                                            HashMap<Object, Object> data = new HashMap<>();
+                                            data.put("type", 2);
+                                            data.put("title", "Goal Reached!");
+                                            data.put("text", "Goal reached: "+goal.getGoalName()+".");
+                                            data.put("date", formattedDate);
+
+                                            FirebaseDatabase.getInstance().getReference().child("Reminders")
+                                                    .child(uname)
+                                                    .push()
+                                                    .setValue(data);
+                                        }
+
+                                        //////////////
                                     }
                                 }
                             }
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
-                                // Handle onCancelled event
+                                Log.e("GoalAdapter",databaseError.getMessage());
                             }
                         });
                     }

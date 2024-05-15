@@ -14,6 +14,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.viewpager2.widget.ViewPager2;
+import androidx.work.Constraints;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.NetworkType;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
@@ -25,6 +30,8 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -128,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sPref = getSharedPreferences("user_info", MODE_PRIVATE);
         if (sPref.getBoolean("logged_in",false) == true)
         {
+            scheduleReminderWorker();
             startActivity(new Intent(MainActivity.this, DashboardActivity.class));
             finish();
         }
@@ -136,5 +144,22 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
     }
+
+    private void scheduleReminderWorker() {
+        Constraints constraints = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+
+        PeriodicWorkRequest reminderWorkRequest =
+                new PeriodicWorkRequest.Builder(ReminderWorker.class, 1, TimeUnit.DAYS)
+                        .setConstraints(constraints)
+                        .build();
+
+        WorkManager.getInstance(getApplicationContext()).enqueueUniquePeriodicWork(
+                "ReminderWorker",
+                ExistingPeriodicWorkPolicy.KEEP,
+                reminderWorkRequest);
+    }
+
 
 }

@@ -94,6 +94,8 @@ public class Login extends AppCompatActivity {
 
                                 Intent intent = new Intent(Login.this, DashboardActivity.class);
                                 startActivity(intent);
+
+                                finish();
                             }
                             else {
                                 Toast.makeText(Login.this, "Login failed!", Toast.LENGTH_LONG).show();
