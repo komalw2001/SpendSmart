@@ -39,8 +39,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-//import org.eazegraph.lib.charts.PieChart;
-//import org.eazegraph.lib.models.PieModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -205,7 +203,7 @@ public class OverviewFragment extends Fragment
         float otherCategoriesValue = 0;
 
         for (CashFlowCategory category : list) {
-            if (category.getTotal() >= threshold) {
+            if (category.getTotal() >= threshold && category.getTotal() > 0) {
                 pieEntries.add(new PieEntry((float) category.getTotal(), category.getCategory().getName()));
                 colors.add(Color.parseColor(category.getCategory().getColor()));
             } else {
@@ -230,7 +228,7 @@ public class OverviewFragment extends Fragment
         pieChart.setDrawEntryLabels(false);
         pieChart.setUsePercentValues(true);
 
-        pieChart.setCenterText("%");
+//        pieChart.setCenterText("%");
         pieChart.setData(data);
         pieChart.getDescription().setText("");
         pieChart.getLegend().setEnabled(false);
@@ -261,33 +259,11 @@ public class OverviewFragment extends Fragment
                 pieChart.getDescription().setText("");
             }
         });
+
+        if (pieEntries.isEmpty()){
+            pieChart.clear();
+        }
     }
-
-
-
-
-
-
-
-
-//    private void updatePieChart(View view) {
-//        List<PieModel> pieModelList = new ArrayList<>();
-//
-//        for (CashFlowCategory category : list) {
-//            PieModel pieModel = new PieModel(category.getCategory().getName(), (float) category.getTotal(), Color.parseColor(category.getCategory().getColor()));
-//            pieModelList.add(pieModel);
-//        }
-//
-//        PieChart pieChart = view.findViewById(R.id.pcExpenses);
-//
-//        pieChart.clearChart();
-//
-//        for (PieModel pieModel : pieModelList) {
-//            pieChart.addPieSlice(pieModel);
-//        }
-//
-//        pieChart.startAnimation();
-//    }
 
 
 }

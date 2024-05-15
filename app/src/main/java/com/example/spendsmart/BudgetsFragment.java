@@ -122,7 +122,7 @@ public class BudgetsFragment extends Fragment {
                         HashMap<Object, Object> data = new HashMap<>();
                         data.put("budgetName", Categories.expenseCategories.get(selectedCategoryIndex).getName());
                         int amt = Integer.valueOf(editText.getText().toString());
-                        if (amt  < 0)
+                        if (amt  <= 0)
                         {
                             Toast.makeText(context, "Enter a valid amount!", Toast.LENGTH_SHORT).show();
                             return;

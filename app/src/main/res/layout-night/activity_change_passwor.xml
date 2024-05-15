@@ -116,7 +116,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/changepasswordbtn"
         android:text="Confirm"
-        android:backgroundTint="@color/main_color"
+        android:backgroundTint="@color/main_color_night"
+        android:textColor="@color/white"
 
         android:layout_marginTop="10dp"
         android:layout_gravity="center"

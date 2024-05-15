@@ -31,9 +31,10 @@
             android:text="Login"
             android:paddingTop="100px"
             android:fontFamily="@font/queensidesmedium"
-            android:textColor="@color/emeraldgreen"
+            android:textColor="@color/main_color_night"
             android:textStyle="bold"
             android:textSize="30sp"
+
 
             >
 
@@ -128,6 +129,7 @@
         android:layout_gravity="center"
         android:backgroundTint="@color/emeraldgreen"
         android:id="@+id/loginbtn"
+        android:textColor="@color/white"
         >
 
     </Button>

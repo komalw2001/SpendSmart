@@ -2,6 +2,11 @@ package com.example.spendsmart;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.work.Constraints;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.NetworkType;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 public class Login extends AppCompatActivity {
 
@@ -91,10 +97,10 @@ public class Login extends AppCompatActivity {
                                 editor.putBoolean("logged_in",true);
                                 editor.apply();
 
-
+                                scheduleReminderWorker();
                                 Intent intent = new Intent(Login.this, DashboardActivity.class);
-                                startActivity(intent);
 
+                                startActivity(intent);
                                 finish();
                             }
                             else {
@@ -116,5 +122,21 @@ public class Login extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void scheduleReminderWorker() {
+        Constraints constraints = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+
+        PeriodicWorkRequest reminderWorkRequest =
+                new PeriodicWorkRequest.Builder(ReminderWorker.class, 1, TimeUnit.DAYS)
+                        .setConstraints(constraints)
+                        .build();
+
+        WorkManager.getInstance(getApplicationContext()).enqueueUniquePeriodicWork(
+                "ReminderWorker",
+                ExistingPeriodicWorkPolicy.KEEP,
+                reminderWorkRequest);
     }
 }

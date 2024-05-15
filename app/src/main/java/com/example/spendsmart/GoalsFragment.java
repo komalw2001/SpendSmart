@@ -128,7 +128,11 @@ public class GoalsFragment extends Fragment {
                         HashMap<Object, Object> data = new HashMap<>();
                         data.put("goalName", Categories.goalCategories.get(selectedCategoryIndex).getName());
                         int amt = Integer.valueOf(editText.getText().toString());
-
+                        if (amt  <= 0)
+                        {
+                            Toast.makeText(context, "Enter a valid amount!", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         data.put("totalGoal", amt);
 
                         String goalID = UUID.randomUUID().toString();
