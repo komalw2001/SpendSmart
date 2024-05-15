@@ -53,11 +53,6 @@ public class Categories {
         goalCategories.add(new Category("Other","#000000","cat_others"));
 
 
-        budgetCategories.add(new Category("Medical Budget","#6100e0","cat_health"));
-        budgetCategories.add(new Category("Food Budget","#ff0000","cat_food_drink"));
-        budgetCategories.add(new Category("Recreation","#6100e0","cat_money"));
-        budgetCategories.add(new Category("Fuel Budget","#ff0000","cat_vehicle"));
-        goalCategories.add(new Category("Other","#000000","cat_others"));
 
     }
 }

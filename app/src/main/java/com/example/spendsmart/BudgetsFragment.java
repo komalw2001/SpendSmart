@@ -33,7 +33,7 @@ import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.UUID;
 
 public class BudgetsFragment extends Fragment {
 
@@ -122,10 +122,16 @@ public class BudgetsFragment extends Fragment {
                         HashMap<Object, Object> data = new HashMap<>();
                         data.put("budgetName", Categories.expenseCategories.get(selectedCategoryIndex).getName());
                         int amt = Integer.valueOf(editText.getText().toString());
+                        if (amt  < 0)
+                        {
+                            Toast.makeText(context, "Enter a valid amount!", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         data.put("totalBudget", amt);
                        data.put("categoryIndex",selectedCategoryIndex);
                         data.put("totalSpent", 0);
-
+                        String budgetID = UUID.randomUUID().toString();
+                        data.put("budgetID",budgetID);
                         SharedPreferences sPref = requireContext().getSharedPreferences("user_info", MODE_PRIVATE);
                         String uname = sPref.getString("session_user","");
                         data.put("user",uname);
@@ -164,7 +170,11 @@ public class BudgetsFragment extends Fragment {
 
 
 
-        Query query = FirebaseDatabase.getInstance().getReference().child("Budget");
+
+        SharedPreferences sPref = requireContext().getSharedPreferences("user_info", MODE_PRIVATE);
+        String uname = sPref.getString("session_user","");
+
+        Query query = FirebaseDatabase.getInstance().getReference().child("Budget").orderByChild("user").equalTo(uname);;
         FirebaseRecyclerOptions<Budget> options = new FirebaseRecyclerOptions.Builder<Budget>().setQuery(query,Budget.class).build();
         budgetAdapter = new BudgetAdapter(options,context);
 
@@ -172,12 +182,6 @@ public class BudgetsFragment extends Fragment {
         rv.setAdapter(budgetAdapter);
 
 
-        Query query1 = FirebaseDatabase.getInstance().getReference().child("Budget");
-        FirebaseRecyclerOptions<Budget> options1 = new FirebaseRecyclerOptions.Builder<Budget>().setQuery(query1,Budget.class).build();
-        budgetAdapter = new BudgetAdapter(options1,context);
-
-        rv.setLayoutManager(new LinearLayoutManager(getContext())); // Set LayoutManager if not set in XML
-        rv.setAdapter(budgetAdapter);
 
     }
 

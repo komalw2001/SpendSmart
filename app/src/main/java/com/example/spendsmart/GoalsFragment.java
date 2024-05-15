@@ -39,7 +39,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.UUID;
 
 public class GoalsFragment extends Fragment {
 
@@ -131,6 +131,9 @@ public class GoalsFragment extends Fragment {
 
                         data.put("totalGoal", amt);
 
+                        String goalID = UUID.randomUUID().toString();
+
+                        data.put("goalID",goalID);
                         data.put("goalAchieved", 0);
 
                         SharedPreferences sPref = requireContext().getSharedPreferences("user_info", MODE_PRIVATE);
@@ -170,8 +173,11 @@ public class GoalsFragment extends Fragment {
         });
 
 
+        SharedPreferences sPref = requireContext().getSharedPreferences("user_info", MODE_PRIVATE);
+        String user = sPref.getString("session_user","");
 
-        Query query = FirebaseDatabase.getInstance().getReference().child("Goals");
+
+        Query query = FirebaseDatabase.getInstance().getReference().child("Goals").orderByChild("user").equalTo(user);
         FirebaseRecyclerOptions<Goal> options = new FirebaseRecyclerOptions.Builder<Goal>().setQuery(query,Goal.class).build();
         goalAdapter = new GoalAdapter(options,context);
 
@@ -179,12 +185,6 @@ public class GoalsFragment extends Fragment {
         rv.setAdapter(goalAdapter);
 
 
-        Query query1 = FirebaseDatabase.getInstance().getReference().child("Goals");
-        FirebaseRecyclerOptions<Goal> options1 = new FirebaseRecyclerOptions.Builder<Goal>().setQuery(query1,Goal.class).build();
-        goalAdapter = new GoalAdapter(options1,context);
-
-        rv.setLayoutManager(new LinearLayoutManager(getContext())); // Set LayoutManager if not set in XML
-        rv.setAdapter(goalAdapter);
 
     }
 

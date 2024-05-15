@@ -1,5 +1,5 @@
 package com.example.spendsmart;
-
+import java.util.UUID;
 public class Goal {
 
     public Goal()
@@ -11,6 +11,7 @@ public class Goal {
         this.goalName = goalName;
         this.totalGoal = totalGoal;
         this.goalAchieved = goalAchieved;
+
     }
     public String getGoalName() {
         return goalName;
@@ -42,10 +43,19 @@ public class Goal {
 
 
 
+    public String getGoalID()
+    {
+        return goalID;
+    }
+
     public int goalAchieved;
 
     public String user;
 
+    public void setGoalID(String goalID) {
+        this.goalID = goalID;
+    }
 
+    public String goalID;
 
 }

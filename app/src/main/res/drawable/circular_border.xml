@@ -1,0 +1,11 @@
+<!-- circular_border.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <stroke
+        android:width="2dp"
+    android:color="@color/emeraldgreen"
+    />
+    <size
+        android:width="200dp"
+    android:height="200dp"/>
+</shape>

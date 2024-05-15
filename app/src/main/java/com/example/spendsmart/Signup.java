@@ -25,7 +25,7 @@ public class Signup extends AppCompatActivity {
 
     DatabaseReference reference;
     EditText etEmail,etPassword,etConfirmPassword;
-    Button btnSignup;
+    Button btnSignup, backtologin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +40,15 @@ public class Signup extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         etConfirmPassword = findViewById(R.id.etConfirmPassword);
         btnSignup = findViewById(R.id.btnSignup);
+        backtologin = findViewById(R.id.btnbacktologin);
 
+        backtologin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Signup.this,Login.class);
+                startActivity(intent);
+            }
+        });
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

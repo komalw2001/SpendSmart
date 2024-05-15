@@ -50,10 +50,8 @@ public class GoalAdapter extends FirebaseRecyclerAdapter<Goal,GoalAdapter.GoalAd
         Log.d("Goal Adapter", "Goal Adapter onBindView Holder");
         holder.gAmount.setText(model.getTotalGoal() + " PKR");
         holder.gname.setText(model.getGoalName());
-//        holder.gCompletion.setText(model.getGoalAchieved() +" PKR achieved");
-
         double percent = (double) model.getGoalAchieved() /model.getTotalGoal();
-        //Toast.makeText(context, percent + "", Toast.LENGTH_SHORT).show();
+
         percent = percent * 100;
         int p = (int) Math.ceil(percent);
         holder.progresbar.setProgress(p);
@@ -83,6 +81,11 @@ public class GoalAdapter extends FirebaseRecyclerAdapter<Goal,GoalAdapter.GoalAd
                             return;
                         }
                         int amt = Integer.parseInt(gAmt);
+                        if (amt < 0)
+                        {
+                            Toast.makeText(context,"Enter a valid amount!",Toast.LENGTH_LONG).show();
+                            return;
+                        }
                         if (amt > model.getTotalGoal())
                         {
                             Toast.makeText(context,"Cannot exceed goal!",Toast.LENGTH_LONG).show();
@@ -105,7 +108,8 @@ public class GoalAdapter extends FirebaseRecyclerAdapter<Goal,GoalAdapter.GoalAd
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                     Goal goal = snapshot.getValue(Goal.class);
-                                    if (goal != null && goal.getGoalName().equals(model.getGoalName())) { // Check if the goal name matches
+                                    if (goal != null && goal.getGoalID().equals(model.getGoalID()))
+                                    {
                                         // Update the goalAchieved amount
                                         int newAchievedAmount = amt;
                                         snapshot.getRef().child("goalAchieved").setValue(newAchievedAmount);
@@ -166,6 +170,37 @@ public class GoalAdapter extends FirebaseRecyclerAdapter<Goal,GoalAdapter.GoalAd
                 updateProgress.show();
             }
         });
+
+       holder.deleteGoal.setOnClickListener(new View.OnClickListener(){
+           @Override
+           public void onClick(View v)
+           {
+               SharedPreferences sPref = context.getSharedPreferences("user_info", MODE_PRIVATE);
+               String uname = sPref.getString("session_user","");
+
+
+               DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Goals");
+               Query userGoalQuery = reference.orderByChild("user").equalTo(uname);
+
+               userGoalQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                   @Override
+                   public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                       for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                           Goal goal = snapshot.getValue(Goal.class);
+                           if (goal != null && goal.getGoalID().equals(model.getGoalID())) {
+
+                               snapshot.getRef().removeValue();
+
+                           }
+                       }
+                   }
+                   @Override
+                   public void onCancelled(@NonNull DatabaseError databaseError) {
+                       // Handle onCancelled event
+                   }
+               });
+           }
+       });
     }
 
     @NonNull
@@ -182,7 +217,7 @@ public class GoalAdapter extends FirebaseRecyclerAdapter<Goal,GoalAdapter.GoalAd
         ProgressBar progresbar;
         Spinner spCat;
 
-        ImageButton editGoal;
+        ImageButton editGoal,deleteGoal;
 
         GoalAdapterViewHolder(@NonNull View itemview)
         {
@@ -194,6 +229,7 @@ public class GoalAdapter extends FirebaseRecyclerAdapter<Goal,GoalAdapter.GoalAd
             progresbar = itemview.findViewById(R.id.progressBar);
 
             editGoal= itemview.findViewById(R.id.editGoal);
+            deleteGoal = itemview.findViewById(R.id.deleteGoal);
 
             Log.d("Goal Adapter", "Goal Adapter View Holder");
 
