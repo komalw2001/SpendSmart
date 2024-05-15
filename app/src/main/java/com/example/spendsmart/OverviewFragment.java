@@ -47,6 +47,10 @@ public class OverviewFragment extends Fragment
     PieChart pcExpenses;
     TextView tooltipView;
 
+    public OverviewFragment()
+    {
+
+    }
     public OverviewFragment(Context c) {
         context = c;
     }

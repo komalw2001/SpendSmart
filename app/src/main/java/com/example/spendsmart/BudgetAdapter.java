@@ -75,83 +75,33 @@ public class BudgetAdapter extends FirebaseRecyclerAdapter<Budget,BudgetAdapter.
         holder.editGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder updateProgress = new AlertDialog.Builder(context);
+                SharedPreferences sPref = context.getSharedPreferences("user_info", MODE_PRIVATE);
+                String uname = sPref.getString("session_user","");
 
-                View view = LayoutInflater.from(context)
-                        .inflate(R.layout.activity_updateprogress, null, false);
+                HashMap<Object, Object> data = new HashMap<>();
+                data.put("user", uname);
 
-                updateProgress.setTitle("Update Budget Spent");
-                updateProgress.setView(view);
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Budget");
+                Query userGoalQuery = reference.orderByChild("user").equalTo(uname);
 
-                updateProgress.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                userGoalQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        EditText editText = view.findViewById(R.id.updatedAmount);
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Budget goal = snapshot.getValue(Budget.class);
+                            if (goal != null && goal.getBudgetID().equals(model.getBudgetID())) { // Check if the goal name matches
 
-                        String gAmt = editText.getText().toString().trim();
-                        if (gAmt.isEmpty()) {
-                            Toast.makeText(context,"Enter updated value!",Toast.LENGTH_LONG).show();
-                            return;
+                                snapshot.getRef().removeValue();
+
+                            }
                         }
-                        int amt = Integer.parseInt(gAmt);
-
-                        SharedPreferences sPref = context.getSharedPreferences("user_info", MODE_PRIVATE);
-                        String uname = sPref.getString("session_user","");
-
-                        HashMap<Object, Object> data = new HashMap<>();
-                        data.put("user", uname);
-
-                        data.put("totalSpent", amt);
-
-
-                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Budget");
-                        Query userGoalQuery = reference.orderByChild("user").equalTo(uname);
-
-                        userGoalQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                    Budget goal = snapshot.getValue(Budget.class);
-                                    if (goal != null && goal.getBudgetName().equals(model.getBudgetName())) { // Check if the goal name matches
-                                        // Update the goalAchieved amount
-                                        int newAchievedAmount = amt;
-                                        snapshot.getRef().child("totalSpent").setValue(newAchievedAmount);
-
-                                        double percent = (double) amt /model.getTotalBudget();
-
-                                        percent = percent * 100;
-                                        int p = (int) Math.ceil(percent);
-                                        holder.progresbar.setProgress(p);
-
-                                        if (percent>100) {
-                                            holder.gCompletion.setText("Status: Budget exceeded");
-                                            holder.progresbar.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
-                                            //set color red here
-                                        }
-                                        else
-                                            holder.gCompletion.setText("Status: Within Budget");
-
-
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-                                // Handle onCancelled event
-                            }
-                        });
                     }
-                });
-
-                updateProgress.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Handle cancellation
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        // Handle onCancelled event
                     }
                 });
 
-                updateProgress.show();
             }
         });
     }
@@ -176,9 +126,6 @@ public class BudgetAdapter extends FirebaseRecyclerAdapter<Budget,BudgetAdapter.
             editGoal= itemview.findViewById(R.id.editGoal);
 
             Log.d("Budget Adapter", "Budget Adapter View Holder");
-
         }
-
     }
 }
-

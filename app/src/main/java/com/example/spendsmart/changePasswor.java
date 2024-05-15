@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,6 +24,7 @@ public class changePasswor extends AppCompatActivity {
 
     EditText pw,newpw,confirmnewpw;
     Button btn;
+    ImageButton backbtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +39,16 @@ public class changePasswor extends AppCompatActivity {
         newpw = findViewById(R.id.newpassword);
         confirmnewpw = findViewById(R.id.confirmnewpassword);
         btn = findViewById(R.id.changepasswordbtn);
+        backbtn = findViewById(R.id.backbtn);
+
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(changePasswor.this,Settings.class);
+                startActivity(intent);
+            }
+        });
+
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -74,4 +74,15 @@ public class Budget {
 
     public int categoryIndex;
 
+    public String getBudgetID() {
+        return budgetID;
+    }
+
+    public void setBudgetID(String budgetID) {
+        this.budgetID = budgetID;
+    }
+
+    public String budgetID;
+
+
 }
